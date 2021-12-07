@@ -1,5 +1,7 @@
 <template>
   <div class="calendar">
+    <button @click="lastMonth">上一月</button>
+    <button @click="nextMonth">下一月</button>
     <ul>
       <li
         class="header"
@@ -8,35 +10,45 @@
       >
         {{ item }}
       </li>
-      <li
-        class="header"
-        v-for="(item, index) in day"
-        :key="`day-${index}`"
-      >
-        {{ item }}
+      <li class="header" v-for="(item, index) in dayRef" :key="`day-${index}`">
+        <span class="day" v-if="item.show">{{ item.show }}</span>
+        <span class="day" v-else>{{ item.day }}</span>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
- import * as dayjs from 'dayjs';
+import { fillCalendarDatas } from '../../../utils/calendar'
+import { ref } from 'vue'
+import dayjs from 'dayjs'
 export default {
-  props: {
-    title: String,
-  },
+  props: {},
   data() {
     return {
-       Header: ["日", "一", "二", "三", "四", "五", "六"],
-       day: []
-    };  
+      Header: ['日', '一', '二', '三', '四', '五', '六']
+    }
   },
   setup(props) {
-    dayjs.extend(isoWeek)
-    console.log(dayjs(new Date()).isoWeekday());
+    const current = ref(new Date())
+    const days = fillCalendarDatas(current.value)
+    const dayRef = ref(days) // 当前月的天数
+    console.log('dayRef', dayRef)
 
-  },
-};
+    // 左右滑动切换上下月
+    const nextMonth = () => {
+      current.value = dayjs(current.value).add(1, 'month')
+      dayRef.value = fillCalendarDatas(current.value)
+    }
+
+    const lastMonth = () => {
+      current.value = dayjs(current.value).add(-1, 'month')
+      dayRef.value = fillCalendarDatas(current.value)
+    }
+
+    return { dayRef, nextMonth, current, lastMonth }
+  }
+}
 </script>
 
 <style scoped lang="less">
@@ -45,7 +57,7 @@ export default {
     position: relative;
     margin: 0;
     pad: 0;
-    display: flex; 
+    display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
@@ -81,5 +93,4 @@ export default {
     }
   }
 }
-
 </style>
