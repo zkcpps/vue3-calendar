@@ -1,13 +1,24 @@
 <template>
   <div>
-      <Calendar />
+    <Calendar />
+    <Popup />
   </div>
 </template>
 
-<script lang="ts" setup >
-    import Calendar from '../../components/Calendar'
+
+
+
+<script lang="ts">
+import Calendar from '../../components/Calendar'
+import Popup from './components/Popup.vue'
+
+export default {
+  components: {
+    Calendar,
+    Popup
+  }
+}
 </script>
 
-<style scoped>
-
+<style scoped lang='less'>
 </style>
