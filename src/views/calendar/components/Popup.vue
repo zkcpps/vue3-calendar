@@ -1,7 +1,10 @@
 <!--  -->
 <template>
   <div>
-    <button @click="show = true">1111</button>
+    <button @click="show = true">
+      {{ selectWho.data.name || '选择成员' }}
+      <van-icon name="arrow-down" />
+    </button>
     <van-action-sheet
       v-model:show="show"
       :round="false"
@@ -19,7 +22,10 @@
           <!-- 搜索结果列表 -->
           <van-cell-group>
             <div class="searchDataItem">
-              <van-cell v-for="item in searchData.data">
+              <van-cell
+                v-for="item in searchData.data"
+                @click="selectOne(item)"
+              >
                 <template #title>
                   <img class="thumbAvatar" :src="item.thumbAvatar" />
                   <span class="name">{{ item.name }}</span>
@@ -41,8 +47,11 @@ interface DataProps {}
 export default {
   name: '',
   setup() {
+    //   控制弹窗开关
     let show = ref(false)
     let searchValue = ref('')
+    // 存储选中的人员的数据
+    let selectWho = reactive({ data: [] })
     // 存储搜索出来的数据
     let searchData = reactive({ data: [] })
 
@@ -60,8 +69,22 @@ export default {
       searchValue.value = ''
       searchData.data = []
     }
+    // 选中人员触发
+    const selectOne = (e: any) => {
+      selectWho.data = e
+      console.log(selectWho)
+      show.value = false
+    }
 
-    return { show, searchValue, onSearch, searchData, closeDialog }
+    return {
+      show,
+      onSearch,
+      searchData,
+      closeDialog,
+      selectOne,
+      selectWho,
+      searchValue
+    }
   }
 }
 </script>
