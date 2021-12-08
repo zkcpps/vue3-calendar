@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
-// 初始化当前日期的月份并填充到日期格子 35个格子
-export const fillCalendarDatas = (date: Date) => {
+// 初始化当前日期的月份并填充到日期格子
+export const fillMonthCalendarDatas = (date: Date) => {
   let _daysInMonth = dayjs(date).daysInMonth(),
     _firstAndLastDay = getMonthTime(date),
     _beforeMonthLastDay = beforeMonthLastDay(date),
@@ -51,6 +51,7 @@ export const fillCalendarDatas = (date: Date) => {
   return beforeDates.concat(days).concat(afterDates)
 }
 
+// 获取当前日期月份的开始日期和结束日期
 const getMonthTime = (time: Date) => {
   let currentDay = new Date(time)
   let currentFullYear = currentDay.getFullYear()
@@ -61,6 +62,37 @@ const getMonthTime = (time: Date) => {
   }
 }
 
+// 前面月份的最后一天
 const beforeMonthLastDay = (date: Date) => {
   return dayjs(dayjs(date).add(-1, 'month').format('YYYY-MM-DD')).daysInMonth()
+}
+
+// 初始化当前日期的两周并初始化到格子里面
+export const fillWeekCalendarDatas = (date: Date) => {}
+
+// 以当前时间为基准获取前后一年的日期数据
+export const fillCalendarDatas = (date: Date) => {
+  const currentDay = dayjs(date).day() // 当前日期周几
+  const firstDayInWeek = dayjs(date).add(6 - currentDay, 'day')
+  const startDay = dayjs(firstDayInWeek.format('YYYY-MM-DD')).add(-420, 'day')
+  return getAllDateCN(startDay, firstDayInWeek)
+}
+
+function getAllDateCN(startTime: any, endTime: any) {
+  var date_all: any[] = []
+  var i = 0
+  while (endTime - startTime >= 0) {
+    var year = startTime.year()
+    var month = startTime.month() + 1
+    var day = startTime.date()
+    date_all[i] = {
+      dateString: year + '年' + month + '月' + day + '日',
+      value: i > 1 && month !== date_all[i - 1].month ? month + '月' : day,
+      date: startTime.valueOf(),
+      month
+    }
+    startTime = startTime.add(1, 'day')
+    i += 1
+  }
+  return date_all
 }

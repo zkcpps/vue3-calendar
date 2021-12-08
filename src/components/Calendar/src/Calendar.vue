@@ -2,6 +2,7 @@
   <div class="calendar">
     <button @click="lastMonth">上一月</button>
     <button @click="nextMonth">下一月</button>
+    <button @click="changeType">切换模式</button>
     <ul>
       <li
         class="header"
@@ -10,49 +11,84 @@
       >
         {{ item }}
       </li>
-      <li class="header" v-for="(item, index) in dayRef" :key="`day-${index}`">
-        <span class="day" v-if="item.show">{{ item.show }}</span>
-        <span class="day" v-else>{{ item.day }}</span>
+      <li
+        class="header"
+        v-for="(item, index) in dayRef.day"
+        :key="`day-${index}`"
+      >
+        <span class="day">{{ item.value }}</span>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { fillCalendarDatas } from '../../../utils/calendar'
-import { ref } from 'vue'
+import {
+  fillMonthCalendarDatas,
+  fillWeekCalendarDatas,
+  fillCalendarDatas
+} from '../../../utils/calendar'
+import { ref, computed, reactive } from 'vue'
 import dayjs from 'dayjs'
 export default {
-  props: {},
+  props: {
+    type: 'week' | 'month'
+  },
   data() {
     return {
       Header: ['日', '一', '二', '三', '四', '五', '六']
     }
   },
-  setup(props) {
+  emits: ['changeType'],
+  setup(props, context) {
+    const { type } = props
     const current = ref(new Date())
-    const days = fillCalendarDatas(current.value)
-    const dayRef = ref(days) // 当前月的天数
-    console.log('dayRef', dayRef)
+    const days = computed(() => {
+      if (type === 'month') {
+        return fillCalendarDatas(current.value)
+      } else {
+        return fillCalendarDatas(current.value)
+      }
+    })
+    const dayRef = reactive({
+      day: days
+    }) // 当前月的天数
 
-    // 左右滑动切换上下月
+    // 右滑
     const nextMonth = () => {
-      current.value = dayjs(current.value).add(1, 'month')
-      dayRef.value = fillCalendarDatas(current.value)
+      if (type === 'week') {
+        // 切换周试图
+        current.value = dayjs(current.value).add(1, 'month')
+      } else {
+        // 切换月试图
+        current.value = dayjs(current.value).add(1, 'month')
+      }
     }
 
+    // 左滑
     const lastMonth = () => {
-      current.value = dayjs(current.value).add(-1, 'month')
-      dayRef.value = fillCalendarDatas(current.value)
+      if (type === 'week') {
+        // 切换周试图
+        current.value = dayjs(current.value).add(-1, 'month')
+      } else {
+        current.value = dayjs(current.value).add(-1, 'month')
+      }
     }
 
-    return { dayRef, nextMonth, current, lastMonth }
+    // 切换模式
+    const changeType = () => {
+      context.emit('changeType')
+    }
+
+    return { dayRef, nextMonth, current, lastMonth, changeType }
   }
 }
 </script>
 
 <style scoped lang="less">
 .calendar {
+  height: 50vh;
+  overflow-y: scroll;
   ul {
     position: relative;
     margin: 0;
