@@ -42,7 +42,6 @@
 <script lang='ts'>
 import { fetchFindPersonByAuth } from '../../../services/calendar'
 import { reactive, ref } from 'vue'
-import { Toast } from 'vant'
 interface DataProps {}
 export default {
   name: '',
