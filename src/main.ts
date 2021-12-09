@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import {
     Tabbar, TabbarItem, Calendar, ConfigProvider, Icon, ActionSheet, Search, Toast,
-    Cell, CellGroup
+    Cell, CellGroup, Button
 
 } from 'vant'
 import router from './router'
@@ -20,6 +20,7 @@ app.use(ActionSheet);
 app.use(Search);
 app.use(Toast);
 app.use(Cell);
+app.use(Button);
 app.use(CellGroup);
 
 app.mount('#app')

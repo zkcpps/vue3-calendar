@@ -1,10 +1,12 @@
 <!--  -->
 <template>
   <div>
-    <button @click="show = true">
-      {{ selectWho.data.name || '选择成员' }}
-      <van-icon name="arrow-down" />
-    </button>
+    <div class="buttonstyle">
+      <van-button plain type="primary" @click="show = true">
+        {{ selectWho.data.name || '选择成员' }}
+        <van-icon name="arrow-down" />
+      </van-button>
+    </div>
     <van-action-sheet
       v-model:show="show"
       :round="false"
@@ -42,6 +44,7 @@
 <script lang='ts'>
 import { fetchFindPersonByAuth } from '../../../services/calendar'
 import { reactive, ref } from 'vue'
+import { Toast } from 'vant'
 interface DataProps {}
 export default {
   name: '',
@@ -71,7 +74,6 @@ export default {
     // 选中人员触发
     const selectOne = (e: any) => {
       selectWho.data = e
-      console.log(selectWho)
       show.value = false
     }
 
@@ -88,6 +90,11 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+.buttonstyle {
+  width: 154px;
+  height: 50px;
+}
+
 // 弹窗内容
 .content {
   padding: 16px 16px 160px;

@@ -33,7 +33,7 @@ export default {
     const current = ref(new Date())
     const days = fillCalendarDatas(current.value)
     const dayRef = ref(days) // 当前月的天数
-    console.log('dayRef', dayRef)
+    // console.log('dayRef', dayRef)
 
     // 左右滑动切换上下月
     const nextMonth = () => {
