@@ -46,7 +46,7 @@ export const fillCalendarDatas = (date: Date) => {
       nickDay: i
     })
   }
-  console.log(beforeDates.concat(days).concat(afterDates))
+  //   console.log(beforeDates.concat(days).concat(afterDates))
 
   return beforeDates.concat(days).concat(afterDates)
 }
