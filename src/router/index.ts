@@ -9,23 +9,23 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/calendar',
     name: 'calendar',
-    component: () => import('../views/calendar/calendar.vue')
+    component: () => import('@/views/calendar/calendar.vue')
   },
   {
     path: '/worker',
     name: 'worker',
-    component: () => import('../views/worker/worker.vue')
+    component: () => import('@/views/worker/worker.vue')
   },
   {
     path: '/customer-list',
     name: 'customer-list',
-    component: () => import('../views/customer-list/customer-list.vue')
+    component: () => import('@/views/customer-list/customer-list.vue')
   },
   {
     path: '/business-score',
     name: 'business-score',
-    component: () => import('../views/business-score/business-score.vue')
-  },
+    component: () => import('@/views/business-score/business-score.vue')
+  }
 ]
 
 const router = createRouter({
