@@ -1,13 +1,27 @@
 <template>
-  <div><Calendar :type="type" @changeType="changeType" /></div>
+  <div>
+    <Calendar :date="currentDate" @changeCurrentDate="changeCurrentDate" />
+  </div>
 </template>
 
-<script lang="ts" setup>
-import Calendar from '../../components/Calendar'
+<script>
+import Calendar from '@/components/Calendar'
+import dayjs from 'dayjs'
 import { ref } from 'vue'
-const type = ref('month')
-const changeType = () => {
-  type.value = type.value === 'week' ? 'month' : 'week'
+export default {
+  components: {
+    Calendar
+  },
+  setup() {
+    const currentDate = ref(new Date())
+    const changeCurrentDate = (dateString) => {
+      currentDate.value = new Date(dayjs(dateString).valueOf())
+    }
+    return {
+      currentDate,
+      changeCurrentDate
+    }
+  }
 }
 </script>
 
