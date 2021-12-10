@@ -41,14 +41,14 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { fetchFindPersonByAuth } from '../../../services/calendar'
 import { reactive, ref } from 'vue'
 import { Toast } from 'vant'
 interface DataProps {}
 export default {
   name: '',
-  setup(props,ctx) {
+  setup(props, ctx) {
     //   控制弹窗开关
     let show = ref(false)
     let searchValue = ref('')
@@ -74,7 +74,7 @@ export default {
     // 选中人员触发
     const selectOne = (e: any) => {
       selectWho.data = e
-      ctx.emit('Sondata',selectWho)
+      ctx.emit('Sondata', selectWho)
       show.value = false
     }
 
@@ -90,14 +90,14 @@ export default {
   }
 }
 </script>
-<style lang='less' scoped>
-.main{
-    display: inline-block;
+<style lang="less" scoped>
+.main {
+  display: inline-block;
 }
 // 按钮
-.buttonstyle button{
-    padding: 0;
-    height: 100%;
+.buttonstyle button {
+  padding: 0;
+  height: 100%;
 }
 // 弹窗内容
 .content {

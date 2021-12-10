@@ -7,9 +7,6 @@
   </div>
 </template>
 
-
-
-
 <script lang="ts">
 import { reactive, ref } from 'vue'
 import Calendar from '../../components/Calendar'
@@ -17,10 +14,8 @@ import Popup from './components/Popup.vue'
 import HoverButton from './components/HoverButton.vue'
 import CalendarList from './components/CalendarList.vue'
 
-
 export default {
   setup() {
-
     return {}
   },
   components: {
@@ -32,9 +27,4 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
-
-
-
-
-</style>
+<style scoped lang="less"></style>
