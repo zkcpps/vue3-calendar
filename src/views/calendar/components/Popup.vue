@@ -1,6 +1,6 @@
-<!--  -->
+<!-- 选择理财师弹出框 -->
 <template>
-  <div>
+  <div class="main">
     <div class="buttonstyle">
       <van-button plain type="primary" @click="show = true">
         {{ selectWho.data.name || '选择成员' }}
@@ -48,7 +48,7 @@ import { Toast } from 'vant'
 interface DataProps {}
 export default {
   name: '',
-  setup() {
+  setup(props,ctx) {
     //   控制弹窗开关
     let show = ref(false)
     let searchValue = ref('')
@@ -74,6 +74,7 @@ export default {
     // 选中人员触发
     const selectOne = (e: any) => {
       selectWho.data = e
+      ctx.emit('Sondata',selectWho)
       show.value = false
     }
 
@@ -90,11 +91,14 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.buttonstyle {
-  width: 154px;
-  height: 50px;
+.main{
+    display: inline-block;
 }
-
+// 按钮
+.buttonstyle button{
+    padding: 0;
+    height: 100%;
+}
 // 弹窗内容
 .content {
   padding: 16px 16px 160px;
