@@ -12,7 +12,11 @@
       </div>
     </div>
     <van-cell-group>
-      <van-cell class="resoult_list" v-for="item in data.data">
+      <van-cell
+        class="resoult_list"
+        v-for="(item, index) in data.data"
+        :key="index"
+      >
         <div class="list_left">{{ formater(item.eventStartTime) }}</div>
         <div
           class="list_right"
@@ -39,7 +43,6 @@ import { Toast } from 'vant'
 import Popup from './Popup.vue'
 import { fetchCalEventsGetCalEvents } from '../../../services/calendar'
 import { formater } from '../../../utils/tool'
-interface DataProps {}
 export default {
   name: '',
   setup() {

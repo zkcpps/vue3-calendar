@@ -1,13 +1,17 @@
 <template>
-  <div>
-     工作台待开发~
-  </div>
+  <blank />
 </template>
 
-<script setup lang="ts">
-
+<script>
+import Blank from '@/components/Blank'
+export default {
+  components: {
+    Blank
+  },
+  setup() {
+    return {}
+  }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style lang="scss" scoped></style>

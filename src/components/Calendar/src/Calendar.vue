@@ -1,96 +1,276 @@
 <template>
-  <div class="calendar">
-    <button @click="lastMonth">上一月</button>
-    <button @click="nextMonth">下一月</button>
-    <ul>
-      <li
-        class="header"
-        v-for="(item, index) in Header"
-        :key="`header-${index}`"
-      >
-        {{ item }}
-      </li>
-      <li class="header" v-for="(item, index) in dayRef" :key="`day-${index}`">
-        <span class="day" v-if="item.show">{{ item.show }}</span>
-        <span class="day" v-else>{{ item.day }}</span>
-      </li>
-    </ul>
+  <div class="calendar_wrap">
+    <div class="calendar" :class="{ wrap_height: type === 'week' }">
+      <div class="header">
+        <ul>
+          <li v-for="(item, index) in Header" :key="`header-${index}`">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+      <div class="content" :class="{ content_height: type === 'week' }">
+        <ul>
+          <li
+            v-for="(item, index) in days.monthDatas"
+            :key="`day-${index}`"
+            @click="clickDate(item)"
+            :id="item.dateString"
+          >
+            <span
+              class="day"
+              v-bind:class="{
+                current:
+                  item.dateString === currentDateString &&
+                  item.dateString !== formatTime(currentDate),
+                active: item.dateString === formatTime(currentDate)
+              }"
+            >
+              {{ item.value }}
+            </span>
+            <div class="icon">
+              <img v-if="item.status === 1" src="@/assets/images/finish.png" />
+              <img
+                v-if="item.status === 2"
+                src="@/assets/images/no_finish.png"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="showDate" @touchstart="touchstart" @touchend="touchend">
+      <span v-show="showDate(currentDate) !== ''"
+        >{{ showDate(currentDate) }} &nbsp;·&nbsp;</span
+      >&nbsp; <span>{{ formatTime(currentDate, 'MM月DD日') }}</span
+      >&nbsp;
+      <span>{{ showDay(currentDate) }}</span>
+    </div>
   </div>
 </template>
 
 <script>
-import { fillCalendarDatas } from '../../../utils/calendar'
-import { ref } from 'vue'
+import {
+  fillCalendarDatas,
+  getFirstAndLastTimes,
+  addDayByDayjs
+} from '../../../utils/calendar'
+import { fetchCustomerEventStatus } from '../../../services/calendar'
+import { ref, reactive, computed, onMounted } from 'vue'
 import dayjs from 'dayjs'
 export default {
-  props: {},
+  props: {
+    date: Date
+  },
   data() {
     return {
       Header: ['日', '一', '二', '三', '四', '五', '六']
     }
   },
-  setup(props) {
-    const current = ref(new Date())
-    const days = fillCalendarDatas(current.value)
-    const dayRef = ref(days) // 当前月的天数
-    // console.log('dayRef', dayRef)
+  emits: ['changeCurrentDate'],
+  setup(props, context) {
+    // 监听选中的日期
+    const currentDate = computed(() => {
+      return props.date
+    })
 
-    // 左右滑动切换上下月
-    const nextMonth = () => {
-      current.value = dayjs(current.value).add(1, 'month')
-      dayRef.value = fillCalendarDatas(current.value)
+    const days = reactive({ monthDatas: [] })
+    const currentDateString = dayjs(new Date()).format('YYYYMMDD')
+
+    const type = ref('week')
+    const startY = ref(0)
+
+    const touchstart = (e) => {
+      startY.value = e.changedTouches[0].pageY
     }
 
-    const lastMonth = () => {
-      current.value = dayjs(current.value).add(-1, 'month')
-      dayRef.value = fillCalendarDatas(current.value)
+    const touchend = (e) => {
+      if (e.changedTouches[0].pageY - startY.value < -50) {
+        if (type.value !== 'week') {
+          type.value = 'week'
+        }
+      }
+      if (e.changedTouches[0].pageY - startY.value > 50) {
+        if (type.value !== 'month') {
+          type.value = 'month'
+        }
+      }
     }
 
-    return { dayRef, nextMonth, current, lastMonth }
+    // 获取数据
+    fetchCustomerEventStatus({
+      userId: '18998811857',
+      eventStartTime: getFirstAndLastTimes(addDayByDayjs(new Date(), -420))
+        .start,
+      eventEndTime: getFirstAndLastTimes(addDayByDayjs(new Date(), 420)).end
+    }).then((res) => {
+      if (res.code === 200 && res.data) {
+        days.monthDatas = fillCalendarDatas(new Date(), res.data)
+      } else {
+        days.monthDatas = fillCalendarDatas(new Date())
+      }
+    })
+
+    onMounted(() => {
+      setTimeout(() => {
+        document.getElementById(formatTime(new Date())).scrollIntoView({
+          behavior: 'instant',
+          block: 'start',
+          inline: 'nearest'
+        })
+      }, 500)
+    })
+
+    // 点击选中日期
+    const clickDate = (date) => {
+      context.emit('changeCurrentDate', date.dateString)
+    }
+
+    // 格式化时间
+    const formatTime = (date, format = 'YYYYMMDD') => dayjs(date).format(format)
+
+    // 显示周几
+    const showDay = (date) =>
+      '周' + ['日', '一', '二', '三', '四', '五', '六'][dayjs(date).day()]
+
+    // 监听选中的日期是否是（昨天今天或者明天）
+    const showDate = (date) => {
+      console.log(dayjs(date))
+      if (formatTime(dayjs(date).add(1, 'day')) === formatTime(new Date())) {
+        return '昨天'
+      } else if (formatTime(dayjs(date)) === formatTime(new Date())) {
+        return '今天'
+      } else if (
+        formatTime(dayjs(date).add(-1, 'day')) === formatTime(new Date())
+      ) {
+        return '明天'
+      } else {
+        return ''
+      }
+    }
+
+    return {
+      days,
+      currentDateString,
+      currentDate,
+      clickDate,
+      type,
+      touchstart,
+      touchend,
+      formatTime,
+      showDate,
+      showDay
+    }
   }
 }
 </script>
 
 <style scoped lang="less">
-.calendar {
-  ul {
-    position: relative;
+@font-face {
+  font-family: 'PingFangSC';
+  src: url('@/assets/fonts/D-DIN-Bold.otf') format('otf'),
+    url('@/assets/fonts/D-DIN-Bold.otf') format('woff'),
+    /* Modern Browsers */ url('@/assets/fonts/D-DIN-Bold.otf')
+      format('truetype'); /* Safari, Android, iOS */
+}
+.calendar_wrap {
+  background: #f6f6f6;
+  .calendar {
+    padding: 0;
     margin: 0;
-    pad: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    li {
-      list-style: none;
-      border-top: 0;
-      border-left: 0;
-      width: calc(100% / 7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      color: #333;
-      padding: 10px 0;
-      font-size: 14px;
-      .day {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        border-radius: 40px;
-        cursor: pointer;
+    height: 46vh;
+    .header {
+      height: 6.5vh;
+      line-height: 8vh;
+      padding: 0;
+      margin: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      font-size: 12px;
+      font-family: PingFangSC;
+      color: #333333;
+      border-bottom: 1px solid #e8e8e8;
+      z-index: 99;
+      ul {
         display: flex;
+        justify-content: flex-start;
         align-items: center;
-        justify-content: center;
-        &:hover {
-          background-color: #eee;
+        flex-wrap: wrap;
+        li {
+          list-style: none;
+          border-top: 0;
+          border-left: 0;
+          width: calc(100% / 7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
-    .header {
-      color: #999;
-      font-size: 16px;
+    .content {
+      height: 36.5vh;
+      overflow-y: scroll;
+      position: absolute;
+      margin-top: 50px;
+      width: 100%;
+      font-size: 12px;
+      color: #333333;
+      border-bottom: 1px solid #e8e8e8;
+      ul {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        li {
+          height: 7.2vh;
+          line-height: 7.2vh;
+          list-style: none;
+          border-top: 0;
+          border-left: 0;
+          width: calc(100% / 7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-flow: column;
+          position: relative;
+        }
+      }
+      .active {
+        width: 8vw;
+        height: 8vw;
+        color: #ffffff;
+        line-height: 8vw;
+        background: #1690ff;
+        text-align: center;
+        border-radius: 50%;
+      }
+      .current {
+        color: #1690ff;
+      }
+      .icon {
+        position: absolute;
+        top: 3vh;
+        img {
+          width: 2.5vw;
+          height: 2.5vw;
+        }
+      }
     }
+  }
+  .content_height {
+    height: 15vh !important;
+  }
+  .wrap_height {
+    height: 24vh;
+  }
+  .showDate {
+    height: 7vh;
+    line-height: 7vh;
+    padding-left: 2vw;
+    font-size: 12px;
+    font-family: PingFangSC;
+    font-weight: 600;
+    color: #333333;
   }
 }
 </style>
