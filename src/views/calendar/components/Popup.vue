@@ -95,9 +95,15 @@ export default {
   display: inline-block;
 }
 // 按钮
-.buttonstyle button {
-  padding: 0;
-  height: 100%;
+.buttonstyle {
+  height: 40px;
+  button {
+    width: 110%;
+    height: 80%;
+    top: 16%;
+    border-radius: 6px;
+    padding: 0;
+  }
 }
 // 弹窗内容
 .content {
@@ -110,7 +116,7 @@ export default {
 // 弹窗标题样式
 :deep(.van-action-sheet__header) {
   text-align: center;
-  margin-top: 18px;
+  margin-top: 8px;
   font-size: 20px;
   border-bottom: 1px solid #e8e8e8;
   color: #333333;
