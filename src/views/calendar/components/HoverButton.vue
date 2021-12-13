@@ -9,8 +9,9 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { ref, reactive } from 'vue'
+import { preventDefault } from 'vant/lib/utils'
 
 interface DataProps {}
 export default {
@@ -20,6 +21,8 @@ export default {
     let Left = ref()
 
     const move = (e: any) => {
+      // 防止与touchstart冲突
+      e.preventDefault()
       // 计算悬浮按钮在视图内的最大移动距离（横轴跟竖轴）
       const maxX = document.documentElement.clientWidth - e.target.offsetWidth
       const maxY = document.documentElement.clientHeight - e.target.offsetHeight
@@ -43,7 +46,7 @@ export default {
   }
 }
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .flownav {
   position: fixed;
   top: 200;

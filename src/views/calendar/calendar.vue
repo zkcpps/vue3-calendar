@@ -1,13 +1,12 @@
 <template>
   <div>
     <Calendar :date="currentDate" @changeCurrentDate="changeCurrentDate" />
-    <Popup />
     <HoverButton />
     <CalendarList></CalendarList>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { reactive, ref } from 'vue'
 import Calendar from '../../components/Calendar'
 import Popup from './components/Popup.vue'
