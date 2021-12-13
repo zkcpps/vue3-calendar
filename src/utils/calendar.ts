@@ -26,6 +26,7 @@ export const fillCalendarDatas = (date: Date, fetchDatas: any) => {
       }
     }
   }
+  //   console.log(beforeDates.concat(days).concat(afterDates))
   return datas
 }
 

@@ -10,6 +10,16 @@ export async function fetchCalEventsGetCalEvents(params: any) {
   })
 }
 
+/**
+ * 搜索同事
+ */
+export async function fetchFindPersonByAuth(params: any) {
+  return request('/v1/department/findUser', {
+    method: 'POST',
+    data: params
+  })
+}
+
 type customerEventsStatusParams = {
   userId: string
   eventStartTime: number

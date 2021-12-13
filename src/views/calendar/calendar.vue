@@ -1,16 +1,25 @@
 <template>
   <div>
     <Calendar :date="currentDate" @changeCurrentDate="changeCurrentDate" />
+    <Popup />
+    <HoverButton />
+    <CalendarList></CalendarList>
   </div>
 </template>
 
 <script>
-import Calendar from '@/components/Calendar'
+import { reactive, ref } from 'vue'
+import Calendar from '../../components/Calendar'
+import Popup from './components/Popup.vue'
+import HoverButton from './components/HoverButton.vue'
+import CalendarList from './components/CalendarList.vue'
 import dayjs from 'dayjs'
-import { ref } from 'vue'
 export default {
   components: {
-    Calendar
+    Calendar,
+    Popup,
+    HoverButton,
+    CalendarList
   },
   setup() {
     const currentDate = ref(new Date())
