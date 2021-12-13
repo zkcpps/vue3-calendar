@@ -1,6 +1,9 @@
 <template>
   <div class="calendar_wrap">
-    <div class="calendar" :class="{ wrap_height: type === 'week' }">
+    <div
+      class="calendar"
+      :style="{ height: type === 'week' ? '24vh' : '46vh' }"
+    >
       <div class="header">
         <ul>
           <li v-for="(item, index) in Header" :key="`header-${index}`">
@@ -8,7 +11,10 @@
           </li>
         </ul>
       </div>
-      <div class="content" :class="{ content_height: type === 'week' }">
+      <div
+        class="content"
+        :style="{ height: type === 'week' ? '15vh' : '36.5vh' }"
+      >
         <ul>
           <li
             v-for="(item, index) in days.monthDatas"
@@ -108,16 +114,13 @@ export default {
       } else {
         days.monthDatas = fillCalendarDatas(new Date())
       }
-    })
-
-    onMounted(() => {
       setTimeout(() => {
-        document.getElementById(formatTime(new Date())).scrollIntoView({
+        document.getElementById(formatTime(new Date()))?.scrollIntoView({
           behavior: 'instant',
           block: 'start',
           inline: 'nearest'
         })
-      }, 500)
+      })
     })
 
     // 点击选中日期
@@ -134,7 +137,6 @@ export default {
 
     // 监听选中的日期是否是（昨天今天或者明天）
     const showDate = (date) => {
-      console.log(dayjs(date))
       if (formatTime(dayjs(date).add(1, 'day')) === formatTime(new Date())) {
         return '昨天'
       } else if (formatTime(dayjs(date)) === formatTime(new Date())) {
@@ -177,7 +179,6 @@ export default {
   .calendar {
     padding: 0;
     margin: 0;
-    height: 46vh;
     .header {
       height: 6.5vh;
       line-height: 8vh;
@@ -208,7 +209,6 @@ export default {
       }
     }
     .content {
-      height: 36.5vh;
       overflow-y: scroll;
       position: absolute;
       margin-top: 50px;
@@ -257,17 +257,11 @@ export default {
       }
     }
   }
-  .content_height {
-    height: 15vh !important;
-  }
-  .wrap_height {
-    height: 24vh;
-  }
   .showDate {
-    height: 7vh;
-    line-height: 7vh;
-    padding-left: 2vw;
-    font-size: 12px;
+    height: 5vh;
+    line-height: 3 vh;
+    padding-left: 4vw;
+    font-size: 4vw;
     font-family: PingFangSC;
     font-weight: 600;
     color: #333333;
