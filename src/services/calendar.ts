@@ -36,3 +36,21 @@ export async function fetchCustomerEventStatus(
     data: params
   })
 }
+
+type lastFollowInfoParams = {
+  id: string
+  mobile: string
+  unionId: string
+  serviceProject: string
+  userId: string
+}
+/**
+ * 获取上次跟进信息（日历使用）
+ */
+export async function fetchCustomerLastFollowInfo(
+  params: lastFollowInfoParams
+) {
+  return request(
+    `/v1/followUp/customer/process/lastFollowInfo?eventId=${params.id}&mobile=${params.mobile}&unionId=${params.unionId}&userId=${params.userId}&serviceProject=${params.serviceProject}`
+  )
+}

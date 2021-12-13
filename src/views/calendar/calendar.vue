@@ -2,7 +2,9 @@
   <div>
     <Calendar :date="currentDate" @changeCurrentDate="changeCurrentDate" />
     <HoverButton />
-    <CalendarList></CalendarList>
+    <CalendarList
+      :style="{ overflowY: 'scroll', height: '500px' }"
+    ></CalendarList>
   </div>
 </template>
 
