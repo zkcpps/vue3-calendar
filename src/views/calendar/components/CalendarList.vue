@@ -49,11 +49,17 @@
             <div class="name">
               <span
                 >{{ detailData.data.nickName }}
+
                 <img
-                  :src="genderIconMap(detailData.data.gender)"
+                  v-if="detailData.data.gender === 2"
+                  src="@/assets/images/man.png"
                   :style="{ width: '16px', height: '16px' }"
                 />
-                <!-- <van-icon name=""></van-icon> -->
+                <img
+                  v-if="detailData.data.gender === 3"
+                  src="@/assets/images/woman.png"
+                  :style="{ width: '16px', height: '16px' }"
+                />
               </span>
               <span ref="number"
                 >{{ detailData.data.mobile }}
@@ -101,7 +107,13 @@
             :style="{ margin: '0 10px' }"
             >规划方案</van-button
           >
-          <van-button plain type="primary" size="small">发消息</van-button>
+          <van-button
+            plain
+            type="primary"
+            size="small"
+            v-if="detailData.data.isFirend"
+            >发消息</van-button
+          >
 
           <van-button
             plain
@@ -118,8 +130,6 @@
 </template>
 
 <script lang="ts">
-import woman from '@/assets/images/woman.png'
-import man from '@/assets/images/man.png'
 import { reactive, ref } from 'vue'
 import { Toast } from 'vant'
 import Popup from './Popup.vue'
@@ -208,16 +218,6 @@ export default {
       console.log(detailData)
     }
 
-    // 性别图标
-    const genderIconMap = (type: any) => {
-      if (type === 1) {
-        return false
-      } else if (type === 2) {
-        return man
-      } else {
-        return woman
-      }
-    }
     //  点击复制手机号码
     const copyNum = (num) => {
       const aux = document.createElement('input')
@@ -242,10 +242,7 @@ export default {
       show,
       copyNum,
       number,
-      detailData,
-      genderIconMap,
-      woman,
-      man
+      detailData
     }
   },
   components: {
@@ -346,7 +343,6 @@ export default {
   .contents {
     padding-left: 44px;
     padding-top: 15px;
-    height: 800px;
     li {
       display: flex;
       margin-bottom: 5px;
@@ -368,6 +364,7 @@ export default {
   }
   //   底部按钮区域
   .footer {
+    background-color: aliceblue;
     position: fixed;
     left: 0;
     bottom: 0;

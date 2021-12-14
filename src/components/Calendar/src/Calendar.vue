@@ -8,12 +8,17 @@
           </li>
         </ul>
       </div>
-      <div class="content" :class="{ content_height: type === 'week' }">
+      <div
+        class="content"
+        :class="{ content_height: type === 'week' }"
+        @touchstart="contentTouchStart"
+        @touchend="contentTouchEnd"
+      >
         <ul>
           <li
             v-for="(item, index) in days.monthDatas"
             :key="`day-${index}`"
-            @click="clickDate(item)"
+            @click="clickDate(item, $event)"
             :id="item.dateString"
           >
             <span
@@ -48,7 +53,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   fillCalendarDatas,
   getFirstAndLastTimes,
@@ -78,6 +83,8 @@ export default {
 
     const type = ref('week')
     const startY = ref(0)
+    const contentMoveStart = ref()
+    const contentMoveLenght = ref(0)
 
     const touchstart = (e) => {
       startY.value = e.changedTouches[0].pageY
@@ -93,6 +100,17 @@ export default {
         if (type.value !== 'month') {
           type.value = 'month'
         }
+      }
+      //   console.log(formatTime(currentDate, 'YYYYMMDD'))
+
+      let dd = document.getElementById(formatTime(currentDate))
+      if (dd) {
+        dd.scrollIntoView({
+          behavior: 'auto',
+          block: 'start',
+          inline: 'nearest'
+        })
+        // dd.scrollTo(0, Math.abs(contentMoveLenght.value))
       }
     }
 
@@ -113,16 +131,32 @@ export default {
     onMounted(() => {
       setTimeout(() => {
         document.getElementById(formatTime(new Date())).scrollIntoView({
-          behavior: 'instant',
+          behavior: 'auto',
           block: 'start',
           inline: 'nearest'
         })
       }, 500)
     })
-
     // 点击选中日期
-    const clickDate = (date) => {
+    const clickDate = (date: any, even: any) => {
+      console.log(even)
+
       context.emit('changeCurrentDate', date.dateString)
+    }
+
+    const contentTouchStart = (e) => {
+      contentMoveStart.value = e.changedTouches[0].clientY
+    }
+    const contentTouchEnd = (e) => {
+      let tt: number = contentMoveStart.value - e.changedTouches[0].clientY
+      if (tt < 0) {
+        console.log('向下滑动' + tt)
+      } else if (tt > 0) {
+        console.log('向上滑动' + tt)
+      }
+      console.log(tt)
+
+      contentMoveLenght.value += tt
     }
 
     // 格式化时间
@@ -134,7 +168,6 @@ export default {
 
     // 监听选中的日期是否是（昨天今天或者明天）
     const showDate = (date) => {
-      console.log(dayjs(date))
       if (formatTime(dayjs(date).add(1, 'day')) === formatTime(new Date())) {
         return '昨天'
       } else if (formatTime(dayjs(date)) === formatTime(new Date())) {
@@ -158,7 +191,9 @@ export default {
       touchend,
       formatTime,
       showDate,
-      showDay
+      showDay,
+      contentTouchStart,
+      contentTouchEnd
     }
   }
 }
