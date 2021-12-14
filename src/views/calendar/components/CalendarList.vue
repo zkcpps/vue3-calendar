@@ -60,7 +60,7 @@
                 <img
                   src="@/assets/images/copy.png"
                   :style="{ width: '16px', height: '16px' }"
-                  @click="copyNum('123456789')"
+                  @click="copyNum(detailData.data.mobile)"
                 />
               </span>
             </div>
@@ -158,6 +158,8 @@ export default {
 
     //   选择某个人，调用方法获取数据
     const getdata = async (e: any) => {
+      console.log(e.data)
+
       let userId = e.data.userId
       const res = await fetchCalEventsGetCalEvents({
         userId: '18145736491',
@@ -211,11 +213,8 @@ export default {
       if (type === 1) {
         return false
       } else if (type === 2) {
-        console.log('222')
         return man
       } else {
-        console.log('1')
-
         return woman
       }
     }
@@ -223,7 +222,7 @@ export default {
     const copyNum = (num) => {
       const aux = document.createElement('input')
       //   value 值后期通过方法的参数传进来
-      aux.setAttribute('value', number.value.innerText)
+      aux.setAttribute('value', num)
       document.body.appendChild(aux)
       aux.select()
       document.execCommand('copy')
