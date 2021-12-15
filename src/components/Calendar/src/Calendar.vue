@@ -55,11 +55,12 @@ import {
   addDayByDayjs
 } from '../../../utils/calendar'
 import { fetchCustomerEventStatus } from '../../../services/calendar'
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watchEffect } from 'vue'
 import dayjs from 'dayjs'
 export default {
   props: {
-    date: Date
+    date: Date,
+    userId: String
   },
   data() {
     return {
@@ -88,6 +89,7 @@ export default {
         if (type.value !== 'week') {
           type.value = 'week'
         }
+        scrollToDomById(formatTime(currentDate)) // 上滑到周要定位到选中的日期那里
       }
       if (e.changedTouches[0].pageY - startY.value > 50) {
         if (type.value !== 'month') {
@@ -95,30 +97,37 @@ export default {
         }
       }
     }
-
-    // 获取数据
-    fetchCustomerEventStatus({
-      userId: '18998811857',
-      eventStartTime: getFirstAndLastTimes(addDayByDayjs(new Date(), -420))
-        .start,
-      eventEndTime: getFirstAndLastTimes(addDayByDayjs(new Date(), 420)).end
-    }).then((res) => {
-      if (res.code === 200 && res.data) {
-        days.monthDatas = fillCalendarDatas(new Date(), res.data)
-      } else {
-        days.monthDatas = fillCalendarDatas(new Date())
-      }
+    watchEffect(() => {
+      // 获取数据
+      fetchCustomerEventStatus({
+        userId: props.userId,
+        eventStartTime: getFirstAndLastTimes(addDayByDayjs(new Date(), -420))
+          .start,
+        eventEndTime: getFirstAndLastTimes(addDayByDayjs(new Date(), 420)).end
+      }).then((res) => {
+        if (res.code === 200 && res.data) {
+          days.monthDatas = fillCalendarDatas(new Date(), res.data)
+        } else {
+          days.monthDatas = fillCalendarDatas(new Date())
+        }
+      })
     })
 
     onMounted(() => {
       setTimeout(() => {
-        document.getElementById(formatTime(new Date())).scrollIntoView({
+        scrollToDomById(formatTime(new Date()))
+      }, 500)
+    })
+
+    // 定位到元素
+    const scrollToDomById = (id) => {
+      document.getElementById(id) &&
+        document.getElementById(id).scrollIntoView({
           behavior: 'instant',
           block: 'start',
           inline: 'nearest'
         })
-      }, 500)
-    })
+    }
 
     // 点击选中日期
     const clickDate = (date) => {

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Calendar :date="currentDate" @changeCurrentDate="changeCurrentDate" />
+    <Calendar
+      :date="currentDate"
+      @changeCurrentDate="changeCurrentDate"
+      :userid="userId"
+    />
     <HoverButton />
     <CalendarList
       :style="{ overflowY: 'scroll', height: '500px' }"
@@ -24,11 +28,13 @@ export default {
   },
   setup() {
     const currentDate = ref(new Date())
-    const changeCurrentDate = (dateString) => {
+    const userId = ref(sessionStorage.getItem('userId'))
+    const changeCurrentDate = (dateString: string) => {
       currentDate.value = new Date(dayjs(dateString).valueOf())
     }
     return {
       currentDate,
+      userId,
       changeCurrentDate
     }
   }
