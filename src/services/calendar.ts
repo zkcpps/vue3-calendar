@@ -54,3 +54,23 @@ export async function fetchCustomerLastFollowInfo(
     `/v1/followUp/customer/process/lastFollowInfo?eventId=${params.id}&mobile=${params.mobile}&unionId=${params.unionId}&userId=${params.userId}&serviceProject=${params.serviceProject}`
   )
 }
+
+/**
+ * 获取理财师个人信息
+ */
+export async function fetchUserInfo(params: any) {
+  return request('/v1/user/handle/info', {
+    method: 'post',
+    data: params
+  })
+}
+
+/**
+ * 打开PC页面
+ */
+export async function fetchTrainProLogin(params: any) {
+  return request(`/v1/customerInfo/trainProLogin`, {
+    method: 'POST',
+    data: params
+  })
+}

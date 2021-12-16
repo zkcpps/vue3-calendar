@@ -2,18 +2,28 @@
   <div>
     <Calendar
       :date="currentDate"
+      :userId="userId"
+      :type="type"
       @changeCurrentDate="changeCurrentDate"
-      :userid="userId"
+      @changeType="changeType"
     />
     <HoverButton />
     <CalendarList
-      :style="{ overflowY: 'scroll', height: '500px' }"
+      :style="{
+        overflowY: 'scroll',
+        height: type === 'month' ? '50vh' : '72vh'
+      }"
+      :userId="userId"
+      :date="currentDate"
+      @touchstart="touchstart"
+      @touchend="touchend"
+      @changeUserId="changeUserId"
     ></CalendarList>
   </div>
 </template>
 
-<script lang="ts">
-import { reactive, ref } from 'vue'
+<script>
+import { ref } from 'vue'
 import Calendar from '../../components/Calendar'
 import Popup from './components/Popup.vue'
 import HoverButton from './components/HoverButton.vue'
@@ -27,15 +37,48 @@ export default {
     CalendarList
   },
   setup() {
+    // 测试用，正式删除
+    sessionStorage.setItem('userId', 18145736491)
     const currentDate = ref(new Date())
     const userId = ref(sessionStorage.getItem('userId'))
-    const changeCurrentDate = (dateString: string) => {
+    const type = ref('week')
+    let touchstarts = ref()
+    const changeCurrentDate = (dateString) => {
       currentDate.value = new Date(dayjs(dateString).valueOf())
     }
+    const touchstart = (e) => {
+      touchstarts.value = e.changedTouches[0].clientX
+    }
+    const touchend = (e) => {
+      let touchLenght = touchstarts.value - e.changedTouches[0].clientX
+      if (touchLenght > 100) {
+        currentDate.value = new Date(
+          dayjs(currentDate.value).add(1, 'day').valueOf()
+        )
+      } else if (touchLenght < -100) {
+        currentDate.value = new Date(
+          dayjs(currentDate.value).add(-1, 'day').valueOf()
+        )
+      }
+    }
+
+    const changeUserId = (id) => {
+      userId.value = id
+    }
+
+    const changeType = (data) => {
+      type.value = data
+    }
+
     return {
       currentDate,
       userId,
-      changeCurrentDate
+      type,
+      changeCurrentDate,
+      touchstart,
+      touchend,
+      changeUserId,
+      changeType
     }
   }
 }
