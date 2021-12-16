@@ -3,7 +3,7 @@
   <div class="main">
     <div class="buttonstyle">
       <van-button plain type="primary" @click="show = true">
-        {{ selectWho.data.name || '选择成员' }}
+        {{ showName || selectWho.data.name || '选择成员' }}
         <van-icon name="arrow-down" />
       </van-button>
     </div>
@@ -43,19 +43,24 @@
 
 <script lang="ts">
 import { fetchFindPersonByAuth } from '../../../services/calendar'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { fetchUserInfo } from '@/services/calendar'
 import { Toast } from 'vant'
-interface DataProps {}
 export default {
   name: '',
+  emits: ['setUserInfo'],
   setup(props, ctx) {
     //   控制弹窗开关
     let show = ref(false)
     let searchValue = ref('')
+
     // 存储选中的人员的数据
-    let selectWho = reactive({ data: [] })
+    let selectWho = reactive({ data: { name } })
     // 存储搜索出来的数据
     let searchData = reactive({ data: [] })
+
+    // 用于显示第一理财师的名字
+    const showName = ref('')
 
     // 按搜索触发回调
     const onSearch = async (val: string) => {
@@ -76,10 +81,22 @@ export default {
       selectWho.data = e
       ctx.emit('Sondata', selectWho)
       show.value = false
+      showName.value = ''
     }
+
+    // 获取理财师信息
+    fetchUserInfo({
+      userId: sessionStorage.getItem('userId')
+    }).then((res: any) => {
+      if (res.code === 200 && res.data) {
+        showName.value = res.data.name
+        ctx.emit('setUserInfo', res.data)
+      }
+    })
 
     return {
       show,
+      showName,
       onSearch,
       searchData,
       closeDialog,

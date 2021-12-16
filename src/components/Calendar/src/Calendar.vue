@@ -2,7 +2,7 @@
   <div class="calendar_wrap">
     <div
       class="calendar"
-      :style="{ height: type === 'week' ? '24vh' : '46vh' }"
+      :style="{ height: calendarType === 'week' ? '21.6vh' : '43.6vh' }"
     >
       <div class="header">
         <ul>
@@ -13,13 +13,13 @@
       </div>
       <div
         class="content"
-        :style="{ height: type === 'week' ? '15vh' : '36.5vh' }"
+        :style="{ height: calendarType === 'week' ? '15vh' : '36.5vh' }"
       >
         <ul>
           <li
             v-for="(item, index) in days.monthDatas"
             :key="`day-${index}`"
-            @click="clickDate(item)"
+            @click="clickDate(item, $event)"
             :id="item.dateString"
           >
             <span
@@ -44,7 +44,7 @@
         </ul>
       </div>
     </div>
-    <div class="showDate" @touchstart="touchstart" @touchend="touchend">
+    <div class="showDate" @touchstart="touchstart" @touchmove="touchend">
       <span v-show="showDate(currentDate) !== ''"
         >{{ showDate(currentDate) }} &nbsp;·&nbsp;</span
       >&nbsp; <span>{{ formatTime(currentDate, 'MM月DD日') }}</span
@@ -61,66 +61,89 @@ import {
   addDayByDayjs
 } from '../../../utils/calendar'
 import { fetchCustomerEventStatus } from '../../../services/calendar'
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watchEffect } from 'vue'
 import dayjs from 'dayjs'
 export default {
   props: {
-    date: Date
+    date: Date,
+    userId: String,
+    type: String
   },
   data() {
     return {
       Header: ['日', '一', '二', '三', '四', '五', '六']
     }
   },
-  emits: ['changeCurrentDate'],
+  emits: ['changeCurrentDate', 'changeType'],
   setup(props, context) {
     // 监听选中的日期
     const currentDate = computed(() => {
       return props.date
     })
 
+    //监听日历类型
+    const calendarType = computed(() => {
+      return props.type
+    })
+
     const days = reactive({ monthDatas: [] })
     const currentDateString = dayjs(new Date()).format('YYYYMMDD')
 
-    const type = ref('week')
     const startY = ref(0)
+
+    // 格式化时间
+    const formatTime = (date, format = 'YYYYMMDD') => dayjs(date).format(format)
+
+    // 定位到元素
+    const scrollToDomById = (id) => {
+      console.log('定位到', id)
+      document.getElementById(id) &&
+        document.getElementById(id).scrollIntoView({
+          behavior: 'instant',
+          block: 'start',
+          inline: 'nearest'
+        })
+    }
 
     const touchstart = (e) => {
       startY.value = e.changedTouches[0].pageY
     }
 
     const touchend = (e) => {
-      if (e.changedTouches[0].pageY - startY.value < -50) {
-        if (type.value !== 'week') {
-          type.value = 'week'
+      if (e.changedTouches[0].pageY - startY.value < -10) {
+        if (calendarType !== 'week') {
+          changeType('week')
+          scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 上滑到周要定位到选中的日期那里
         }
       }
-      if (e.changedTouches[0].pageY - startY.value > 50) {
-        if (type.value !== 'month') {
-          type.value = 'month'
+      if (e.changedTouches[0].pageY - startY.value > 30) {
+        if (calendarType !== 'month') {
+          changeType('month')
+          scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 上滑到周要定位到选中的日期那里
         }
       }
     }
-
-    // 获取数据
-    fetchCustomerEventStatus({
-      userId: '18998811857',
-      eventStartTime: getFirstAndLastTimes(addDayByDayjs(new Date(), -420))
-        .start,
-      eventEndTime: getFirstAndLastTimes(addDayByDayjs(new Date(), 420)).end
-    }).then((res) => {
-      if (res.code === 200 && res.data) {
-        days.monthDatas = fillCalendarDatas(new Date(), res.data)
-      } else {
-        days.monthDatas = fillCalendarDatas(new Date())
-      }
-      setTimeout(() => {
-        document.getElementById(formatTime(new Date()))?.scrollIntoView({
-          behavior: 'instant',
-          block: 'start',
-          inline: 'nearest'
-        })
+    watchEffect(() => {
+      // 获取数据
+      fetchCustomerEventStatus({
+        userId: props.userId,
+        eventStartTime: getFirstAndLastTimes(addDayByDayjs(new Date(), -420))
+          .start,
+        eventEndTime: getFirstAndLastTimes(addDayByDayjs(new Date(), 420)).end
+      }).then((res) => {
+        if (res.code === 200 && res.data) {
+          days.monthDatas = fillCalendarDatas(new Date(), res.data)
+        } else {
+          days.monthDatas = fillCalendarDatas(new Date())
+        }
+        setTimeout(() => {
+          scrollToDomById(formatTime(new Date(), 'YYYYMMDD'))
+        }, 500)
       })
+    })
+
+    watchEffect(() => {
+      scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 左右切换日期监听日期并跳转到日期
     })
 
     // 点击选中日期
@@ -128,8 +151,10 @@ export default {
       context.emit('changeCurrentDate', date.dateString)
     }
 
-    // 格式化时间
-    const formatTime = (date, format = 'YYYYMMDD') => dayjs(date).format(format)
+    // 点击选中日期
+    const changeType = (data) => {
+      context.emit('changeType', data)
+    }
 
     // 显示周几
     const showDay = (date) =>
@@ -154,8 +179,8 @@ export default {
       days,
       currentDateString,
       currentDate,
+      calendarType,
       clickDate,
-      type,
       touchstart,
       touchend,
       formatTime,
@@ -181,7 +206,7 @@ export default {
     margin: 0;
     .header {
       height: 6.5vh;
-      line-height: 8vh;
+      line-height: 6.5vh;
       padding: 0;
       margin: 0;
       position: fixed;
@@ -191,7 +216,6 @@ export default {
       font-family: PingFangSC;
       color: #333333;
       border-bottom: 1px solid #e8e8e8;
-      z-index: 99;
       ul {
         display: flex;
         justify-content: flex-start;
@@ -210,12 +234,13 @@ export default {
     }
     .content {
       overflow-y: scroll;
-      position: absolute;
-      margin-top: 50px;
+      position: fixed;
+      top: 6.5vh;
       width: 100%;
       font-size: 12px;
       color: #333333;
-      border-bottom: 1px solid #e8e8e8;
+      //border-bottom: 1px solid #e8e8e8;
+      z-index: 999;
       ul {
         display: flex;
         justify-content: flex-start;
@@ -236,10 +261,10 @@ export default {
         }
       }
       .active {
-        width: 8vw;
-        height: 8vw;
+        width: 7.2vw;
+        height: 7.2vw;
         color: #ffffff;
-        line-height: 8vw;
+        line-height: 7.2vw;
         background: #1690ff;
         text-align: center;
         border-radius: 50%;
@@ -249,22 +274,27 @@ export default {
       }
       .icon {
         position: absolute;
-        top: 3vh;
+        top: 3.2vh;
         img {
-          width: 2.5vw;
-          height: 2.5vw;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
         }
       }
     }
   }
   .showDate {
-    height: 5vh;
-    line-height: 3 vh;
-    padding-left: 4vw;
-    font-size: 4vw;
+    height: 3vh;
+    line-height: 3vh;
+    padding-top: 2vh;
+    padding-left: 5vw;
+    font-size: 14px;
     font-family: PingFangSC;
     font-weight: 600;
     color: #333333;
+    position: relative;
+    background: #ffffff;
+    z-index: 1000;
   }
 }
 </style>

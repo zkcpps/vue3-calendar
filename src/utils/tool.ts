@@ -91,3 +91,22 @@ export const isOnlyWxwork = () => {
 export const formater = (time: number) => {
   return dayjs(time * 1000).format('HH:mm')
 }
+
+export const formatTime = (time: number, format: string) => {
+  return dayjs(time * 1000).format(format)
+}
+
+// 判断PC端还是移动端
+export const isMobile = () => {
+  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    return true
+  }
+  return false
+}
+
+// 判断windows还是Mac
+export const isMac = () => {
+  const isMac = /macintosh|mac os x/i.test(navigator.userAgent)
+
+  return isMac
+}

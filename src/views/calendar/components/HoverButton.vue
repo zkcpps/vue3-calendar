@@ -51,14 +51,14 @@ export default {
   position: fixed;
   top: 200;
   right: 0;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #fcfcfc;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
   color: rgba(22, 144, 255, 1);
   text-align: center;
-  line-height: 80px;
+  line-height: 60px;
   z-index: 3000;
 }
 // .activeRight {

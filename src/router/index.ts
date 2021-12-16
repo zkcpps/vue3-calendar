@@ -30,7 +30,9 @@ const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
   routes,
-  history: createWebHashHistory()
+  history: createWebHashHistory(
+    window.__POWERED_BY_QIANKUN__ ? '/app-vue/' : '/'
+  )
 })
 
 export default router
