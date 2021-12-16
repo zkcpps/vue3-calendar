@@ -2,7 +2,7 @@
   <blank />
 </template>
 
-<script>
+<script lang="ts">
 import Blank from '@/components/Blank'
 export default {
   components: {
