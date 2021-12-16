@@ -10,6 +10,8 @@
   "dependencies": {
     "axios": "^0.24.0",
     "vant": "^3.3.4",
+    "vite-plugin-index-html": "^2.0.0",
+    "vite-plugin-qiankun": "^1.0.11",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12"
   },

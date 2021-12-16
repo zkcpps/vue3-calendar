@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 /**
  * @param {String} url
  * @description 从URL中解析参数
@@ -5,7 +7,7 @@
 export const getParams = (url: string) => {
   const keyValueArr = url.split('?')[1].split('&')
   let paramObj: any = {}
-  keyValueArr.forEach(item => {
+  keyValueArr.forEach((item) => {
     const keyValue = item.split('=')
     paramObj[keyValue[0]] = keyValue[1]
   })
@@ -14,7 +16,9 @@ export const getParams = (url: string) => {
 
 // 截取字符串
 export const sliceStr = (str: any, sliceLen: number) => {
-  if (!str) { return '' }
+  if (!str) {
+    return ''
+  }
   let realLength = 0
   const len = str.length
   let charCode = -1
@@ -61,24 +65,48 @@ export function objClone(jsonObj: any) {
 // 文件大小单位自适应转换到KB,MB,GB
 export const formatFileSize = (fileSize: number) => {
   if (fileSize < 1024) {
-    return `${fileSize}B`;
+    return `${fileSize}B`
   }
   if (fileSize < 1024 * 1024) {
-    const temp = (fileSize / 1024).toFixed(2);
-    return `${temp}K`;
+    const temp = (fileSize / 1024).toFixed(2)
+    return `${temp}K`
   }
   if (fileSize < 1024 * 1024 * 1024) {
-    const temp = (fileSize / (1024 * 1024)).toFixed(2);
-    return `${temp}M`;
+    const temp = (fileSize / (1024 * 1024)).toFixed(2)
+    return `${temp}M`
   }
-  return `${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}G`;
-};
+  return `${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}G`
+}
 
 // 是否企微环境
 export const isOnlyWxwork = () => {
-  const ua = navigator.userAgent.toLowerCase();
+  const ua = navigator.userAgent.toLowerCase()
   if (ua.match(/MicroMessenger/i) && ua.match(/wxwork/i)) {
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
+
+// 格式化时间
+export const formater = (time: number) => {
+  return dayjs(time * 1000).format('HH:mm')
+}
+
+export const formatTime = (time: number, format: string) => {
+  return dayjs(time * 1000).format(format)
+}
+
+// 判断PC端还是移动端
+export const isMobile = () => {
+  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    return true
+  }
+  return false
+}
+
+// 判断windows还是Mac
+export const isMac = () => {
+  const isMac = /macintosh|mac os x/i.test(navigator.userAgent)
+
+  return isMac
+}
