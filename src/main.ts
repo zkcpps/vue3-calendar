@@ -22,7 +22,7 @@ import {
   renderWithQiankun,
   qiankunWindow
 } from 'vite-plugin-qiankun/dist/helper'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 let router = null
 let instance = null
@@ -59,7 +59,7 @@ declare global {
 
 function render(props = {}) {
   const { container } = props
-  history = createWebHistory(
+  history = createWebHashHistory(
     qiankunWindow.__POWERED_BY_QIANKUN__ ? '/calendar-mobile' : '/'
   )
   //   console.log(history,qiankunWindow.__POWERED_BY_QIANKUN__ ,"history");

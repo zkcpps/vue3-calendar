@@ -1,5 +1,5 @@
 {
-  "name": "calendar-mobile-app",
+  "name": "calendar-mobile",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
