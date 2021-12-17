@@ -15,33 +15,39 @@
         class="content"
         :style="{ height: calendarType === 'week' ? '15vh' : '36.5vh' }"
       >
-        <ul>
-          <li
-            v-for="(item, index) in days.monthDatas"
-            :key="`day-${index}`"
-            @click="clickDate(item, $event)"
-            :id="item.dateString"
-          >
-            <span
-              class="day"
-              v-bind:class="{
-                current:
-                  item.dateString === currentDateString &&
-                  item.dateString !== formatTime(currentDate),
-                active: item.dateString === formatTime(currentDate)
-              }"
+        <lazy-component preload="15vh">
+          <ul>
+            <li
+              v-for="(item, index) in days.monthDatas"
+              :key="`day-${index}`"
+              @click="clickDate(item, $event)"
+              :id="item.dateString"
+              v-lazy="li"
             >
-              {{ item.value }}
-            </span>
-            <div class="icon">
-              <img v-if="item.status === 1" src="@/assets/images/finish.png" />
-              <img
-                v-if="item.status === 2"
-                src="@/assets/images/no_finish.png"
-              />
-            </div>
-          </li>
-        </ul>
+              <span
+                class="day"
+                v-bind:class="{
+                  current:
+                    item.dateString === currentDateString &&
+                    item.dateString !== formatTime(currentDate),
+                  active: item.dateString === formatTime(currentDate)
+                }"
+              >
+                {{ item.value }}
+              </span>
+              <div class="icon">
+                <img
+                  v-if="item.status === 1"
+                  src="@/assets/images/finish.png"
+                />
+                <img
+                  v-if="item.status === 2"
+                  src="@/assets/images/no_finish.png"
+                />
+              </div>
+            </li>
+          </ul>
+        </lazy-component>
       </div>
     </div>
     <div class="showDate" @touchstart="touchstart" @touchmove="touchend">
@@ -284,7 +290,7 @@ export default {
     }
   }
   .showDate {
-    height: 3vh;
+    //height: 3vh;
     line-height: 3vh;
     padding-top: 2vh;
     padding-left: 5vw;
