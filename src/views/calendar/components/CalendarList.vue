@@ -1,9 +1,8 @@
-<!--  -->
 <template>
   <div>
     <div class="header">
       <div class="selector">
-        <Popup @Sondata="getdata" :info="userinfo" @setUserInfo="setUserInfo" />
+        <Popup @Sondata="getdata" @setUserInfo="setUserInfo" />
       </div>
       <div class="header_resoult">
         <span>共有{{ fna }}个FNA,</span>
@@ -239,10 +238,10 @@ export default {
   emits: ['changeUserId'],
   setup(props, context) {
     //   接收的数据
-    let data = reactive({ data: [] })
-    let detailData = reactive({ data: [] })
-    const event = reactive({ data: {} })
-    const userInfo = reactive({ data: {} })
+    let data: any = reactive({ data: [] })
+    let detailData: any = reactive({ data: [] })
+    const event: any = reactive({ data: {} })
+    const userInfo: any = reactive({ data: {} })
 
     // 控制点击事件的弹窗
     let show = ref(false)
@@ -397,7 +396,7 @@ export default {
           'openUserProfile',
           {
             type: 2, //1表示该userid是企业成员，2表示该userid是外部联系人
-            userid: item.externalUserId //可以是企业成员，也可以是外部联系人
+            userid: detailData.data.externalUserId //可以是企业成员，也可以是外部联系人
           },
           function (res: any) {
             if (res.err_msg !== 'openUserProfile:ok') {

@@ -58,7 +58,7 @@ declare global {
 }
 
 function render(props = {}) {
-  const { container } = props
+  const { container } = props as any
   history = createWebHashHistory(
     qiankunWindow.__POWERED_BY_QIANKUN__ ? '/calendar-mobile' : '/'
   )
