@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { createApp } from 'vue'
 import App from './App.vue'
 import {
@@ -14,67 +13,90 @@ import {
   CellGroup,
   Button,
   Popup,
-  Image
+  Image,
+  Lazyload
 } from 'vant'
-import router from './router'
+import routes from './router'
 import 'vant/lib/index.css'
+import {
+  renderWithQiankun,
+  qiankunWindow
+} from 'vite-plugin-qiankun/dist/helper'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-// let router;
-let instance: Vue.App<Element>
+let router = null
+let instance = null
+let history = null
+
+instance = createApp(App)
+instance.use(Tabbar)
+instance.use(TabbarItem)
+instance.use(Calendar)
+instance.use(ConfigProvider)
+instance.use(Icon)
+
+instance.use(ActionSheet)
+instance.use(Search)
+instance.use(Toast)
+instance.use(Cell)
+instance.use(CellGroup)
+instance.use(Button)
+instance.use(Popup)
+instance.use(Image)
+
+instance.use(Lazyload, {
+  lazyComponent: true
+})
 
 declare global {
   interface Window {
-    __POWERED_BY_QIANKUN__?: string
+    Explain: any
+    __POWERED_BY_QIANKUN__: any
+    __INJECTED_PUBLIC_PATH_BY_QIANKUN__: any
+    wx: any
   }
 }
 
-interface IRenderProps {
-  container: Element | string
-}
-
-function render(props: IRenderProps) {
+function render(props = {}) {
   const { container } = props
-  instance = createApp(App)
-  instance
-    .use(Tabbar)
-    .use(router)
-    .use(TabbarItem)
-    .use(Calendar)
-    .use(ConfigProvider)
-    .use(Icon)
-    .use(ActionSheet)
-    .use(Search)
-    .use(Toast)
-    .use(Cell)
-    .use(Button)
-    .use(CellGroup)
-    .use(Image)
-    .use(Popup)
-    .mount(
-      container instanceof Element
-        ? (container.querySelector('#app') as Element)
-        : (container as string)
-    )
-}
-// 独立运行时
-if (!window.__POWERED_BY_QIANKUN__) {
-  render({ container: '#app' })
-}
-//暴露主应用生命周期钩子
-export async function bootstrap() {
-  console.log('subapp bootstraped')
+  history = createWebHashHistory(
+    qiankunWindow.__POWERED_BY_QIANKUN__ ? '/calendar-mobile' : '/'
+  )
+  //   console.log(history,qiankunWindow.__POWERED_BY_QIANKUN__ ,"history");
+  router = createRouter({
+    history,
+    routes
+  })
+
+  instance.use(router)
+  //   instance.use(store);
+  instance.mount(
+    container ? container.querySelector('#app') : document.getElementById('app')
+  )
+  if (qiankunWindow.__POWERED_BY_QIANKUN__) {
+    console.log('我正在作为子应用运行')
+  }
 }
 
-export async function mount(props: any) {
-  console.log('mount subapp')
-  render(props)
+// some code
+renderWithQiankun({
+  mount(props) {
+    console.log('viteapp mount')
+    render(props)
+  },
+  bootstrap() {
+    console.log('bootstrap')
+  },
+  unmount(props) {
+    console.log('vite被卸载了')
+    instance.unmount()
+    instance._container.innerHTML = ''
+    history.destroy() // 不卸载  router 会导致其他应用路由失败
+    router = null
+    instance = null
+  }
+})
+
+if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
+  render({})
 }
-
-export async function unmount() {
-  console.log('unmount college app')
-  instance.unmount()
-}
-
-// const app = createApp(App)
-
-// app.mount('#app')

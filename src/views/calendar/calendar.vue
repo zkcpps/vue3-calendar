@@ -7,7 +7,7 @@
       @changeCurrentDate="changeCurrentDate"
       @changeType="changeType"
     />
-    <HoverButton />
+    <HoverButton @click="toWeekView" />
     <CalendarList
       :style="{
         overflowY: 'scroll',
@@ -70,6 +70,13 @@ export default {
       type.value = data
     }
 
+    // 跳转周试图
+    const toWeekView = () => {
+      window.open(
+        `https://blue.planplus.cn/chat-tool-bar/main-app/calender/#/?userId=${userId.value}`
+      )
+    }
+
     return {
       currentDate,
       userId,
@@ -78,7 +85,8 @@ export default {
       touchstart,
       touchend,
       changeUserId,
-      changeType
+      changeType,
+      toWeekView
     }
   }
 }

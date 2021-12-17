@@ -246,13 +246,8 @@ babel-walk@3.0.0-canary-5:
 
 boolbase@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npm.taobao.org/boolbase/download/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
+  resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
-
-buffer-from@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.nlark.com/buffer-from/download/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
-  integrity sha1-KxRqb9cugLT1XSVfNe1Zo6mkG9U=
 
 call-bind@^1.0.2:
   version "1.0.2"
@@ -279,8 +274,8 @@ character-parser@^2.2.0:
 
 cheerio-select@^1.5.0:
   version "1.5.0"
-  resolved "https://registry.nlark.com/cheerio-select/download/cheerio-select-1.5.0.tgz#faf3daeb31b17c5e1a9dabcee288aaf8aafa5823"
-  integrity sha1-+vPa6zGxfF4anavO4oiq+Kr6WCM=
+  resolved "https://registry.yarnpkg.com/cheerio-select/-/cheerio-select-1.5.0.tgz#faf3daeb31b17c5e1a9dabcee288aaf8aafa5823"
+  integrity sha512-qocaHPv5ypefh6YNxvnbABM07KMxExbtbfuJoIie3iZXX1ERwYmJcIiRrr9H05ucQP1k28dav8rpdDgjQd8drg==
   dependencies:
     css-select "^4.1.3"
     css-what "^5.0.1"
@@ -290,8 +285,8 @@ cheerio-select@^1.5.0:
 
 cheerio@^1.0.0-rc.10:
   version "1.0.0-rc.10"
-  resolved "https://registry.nlark.com/cheerio/download/cheerio-1.0.0-rc.10.tgz?cache=0&sync_timestamp=1623167701954&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcheerio%2Fdownload%2Fcheerio-1.0.0-rc.10.tgz#2ba3dcdfcc26e7956fc1f440e61d51c643379f3e"
-  integrity sha1-K6Pc38wm55VvwfRA5h1RxkM3nz4=
+  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.10.tgz#2ba3dcdfcc26e7956fc1f440e61d51c643379f3e"
+  integrity sha512-g0J0q/O6mW8z5zxQ3A8E8J1hUgp4SMOvEoW/x84OwyHKe/Zccz83PVT4y5Crcr530FV6NgmKI1qvGTKVl9XXVw==
   dependencies:
     cheerio-select "^1.5.0"
     dom-serializer "^1.3.2"
@@ -300,23 +295,6 @@ cheerio@^1.0.0-rc.10:
     parse5 "^6.0.1"
     parse5-htmlparser2-tree-adapter "^6.0.1"
     tslib "^2.2.0"
-
-clean-css@^5.2.2:
-  version "5.2.2"
-  resolved "https://registry.npmmirror.com/clean-css/download/clean-css-5.2.2.tgz?cache=0&sync_timestamp=1634992314911&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fclean-css%2Fdownload%2Fclean-css-5.2.2.tgz#d3a7c6ee2511011e051719838bdcf8314dc4548d"
-  integrity sha1-06fG7iURAR4FFxmDi9z4MU3EVI0=
-  dependencies:
-    source-map "~0.6.0"
-
-commander@^2.20.0:
-  version "2.20.3"
-  resolved "https://registry.npmmirror.com/commander/download/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
-  integrity sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=
-
-commander@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.npmmirror.com/commander/download/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
-  integrity sha1-SDfqGy2me5xhamevuw+v7lZ7ymY=
 
 constantinople@^4.0.1:
   version "4.0.1"
@@ -335,7 +313,7 @@ copy-anything@^2.0.1:
 
 css-select@^4.1.3:
   version "4.2.0"
-  resolved "https://registry.npmmirror.com/css-select/download/css-select-4.2.0.tgz#ab28276d3afb00cc05e818bd33eb030f14f57895"
+  resolved "https://registry.yarnpkg.com/css-select/-/css-select-4.2.0.tgz#ab28276d3afb00cc05e818bd33eb030f14f57895"
   integrity sha512-6YVG6hsH9yIb/si3Th/is8Pex7qnVHO6t7q7U6TIUnkQASGbS8tnUDBftnPynLNnuUl/r2+PTd0ekiiq7R0zJw==
   dependencies:
     boolbase "^1.0.0"
@@ -346,8 +324,8 @@ css-select@^4.1.3:
 
 css-what@^5.0.1, css-what@^5.1.0:
   version "5.1.0"
-  resolved "https://registry.npmmirror.com/css-what/download/css-what-5.1.0.tgz#3f7b707aadf633baf62c2ceb8579b545bb40f7fe"
-  integrity sha1-P3tweq32M7r2LCzrhXm1RbtA9/4=
+  resolved "https://registry.yarnpkg.com/css-what/-/css-what-5.1.0.tgz#3f7b707aadf633baf62c2ceb8579b545bb40f7fe"
+  integrity sha512-arSMRWIIFY0hV8pIxZMEfmMI47Wj3R/aWpZDDxWYCPEiOMv6tfOrnpDtgxBYPEQD4V0Y/958+1TdC3iWTFcUPw==
 
 csstype@^2.6.8:
   version "2.6.19"
@@ -774,18 +752,10 @@ needle@^2.5.2:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
-no-case@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npm.taobao.org/no-case/download/no-case-3.0.4.tgz?cache=0&sync_timestamp=1606867308811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fno-case%2Fdownload%2Fno-case-3.0.4.tgz#d361fd5c9800f558551a8369fc0dcd4662b6124d"
-  integrity sha1-02H9XJgA9VhVGoNp/A3NRmK2Ek0=
-  dependencies:
-    lower-case "^2.0.2"
-    tslib "^2.0.3"
-
 nth-check@^2.0.1:
   version "2.0.1"
-  resolved "https://registry.nlark.com/nth-check/download/nth-check-2.0.1.tgz?cache=0&sync_timestamp=1631793617973&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnth-check%2Fdownload%2Fnth-check-2.0.1.tgz#2efe162f5c3da06a28959fbd3db75dbeea9f0fc2"
-  integrity sha1-Lv4WL1w9oGoolZ+9PbddvuqfD8I=
+  resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-2.0.1.tgz#2efe162f5c3da06a28959fbd3db75dbeea9f0fc2"
+  integrity sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w==
   dependencies:
     boolbase "^1.0.0"
 
@@ -809,23 +779,15 @@ parse-node-version@^1.0.1:
 
 parse5-htmlparser2-tree-adapter@^6.0.1:
   version "6.0.1"
-  resolved "https://registry.npm.taobao.org/parse5-htmlparser2-tree-adapter/download/parse5-htmlparser2-tree-adapter-6.0.1.tgz?cache=0&sync_timestamp=1596089818598&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fparse5-htmlparser2-tree-adapter%2Fdownload%2Fparse5-htmlparser2-tree-adapter-6.0.1.tgz#2cdf9ad823321140370d4dbf5d3e92c7c8ddc6e6"
-  integrity sha1-LN+a2CMyEUA3DU2/XT6Sx8jdxuY=
+  resolved "https://registry.yarnpkg.com/parse5-htmlparser2-tree-adapter/-/parse5-htmlparser2-tree-adapter-6.0.1.tgz#2cdf9ad823321140370d4dbf5d3e92c7c8ddc6e6"
+  integrity sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==
   dependencies:
     parse5 "^6.0.1"
 
 parse5@^6.0.1:
   version "6.0.1"
-  resolved "https://registry.npm.taobao.org/parse5/download/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
-  integrity sha1-4aHAhcVps9wIMhGE8Zo5zCf3wws=
-
-pascal-case@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npm.taobao.org/pascal-case/download/pascal-case-3.1.2.tgz?cache=0&sync_timestamp=1606867325163&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpascal-case%2Fdownload%2Fpascal-case-3.1.2.tgz#b48e0ef2b98e205e7c1dae747d0b1508237660eb"
-  integrity sha1-tI4O8rmOIF58Ha50fQsVCCN2YOs=
-  dependencies:
-    no-case "^3.0.4"
-    tslib "^2.0.3"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
+  integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
 path-parse@^1.0.6:
   version "1.0.7"
@@ -1065,7 +1027,7 @@ token-stream@1.0.0:
   resolved "https://registry.npm.taobao.org/token-stream/download/token-stream-1.0.0.tgz#cc200eab2613f4166d27ff9afc7ca56d49df6eb4"
   integrity sha1-zCAOqyYT9BZtJ/+a/HylbUnfbrQ=
 
-tslib@^2.0.3, tslib@^2.2.0, tslib@^2.3.0:
+tslib@^2.2.0, tslib@^2.3.0:
   version "2.3.1"
   resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz?cache=0&sync_timestamp=1628722556410&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE=
@@ -1094,17 +1056,9 @@ vant@^3.3.4:
     "@vant/popperjs" "^1.1.0"
     "@vant/use" "^1.3.4"
 
-vite-plugin-index-html@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmmirror.com/vite-plugin-index-html/download/vite-plugin-index-html-2.0.0.tgz#d117c85afb0ef516c325a007759788eb9b1462ab"
-  integrity sha512-9wX078qSpTlYM6eM6RUkaG4QknOrBZ/X8AQrewCt8v/9Cw45oySMMigxJXFxFI43kXP8I/RNRvdEBE0ATleTmQ==
-  dependencies:
-    fs-extra "^10.0.0"
-    html-minifier-terser "^6.0.2"
-
 vite-plugin-qiankun@^1.0.11:
   version "1.0.11"
-  resolved "https://registry.npmmirror.com/vite-plugin-qiankun/download/vite-plugin-qiankun-1.0.11.tgz#2ca018edc0806b438c42b7736b7bdc8391bd76fa"
+  resolved "https://registry.yarnpkg.com/vite-plugin-qiankun/-/vite-plugin-qiankun-1.0.11.tgz#2ca018edc0806b438c42b7736b7bdc8391bd76fa"
   integrity sha512-eumfnkSvWovU61KQD66tuNYJdPJZSoAvGc/sXfOJu8HL62MlsesA/zMwyqGBUOb9wgisL+mOcQgdzB8YXnBmfQ==
   dependencies:
     cheerio "^1.0.0-rc.10"

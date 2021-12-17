@@ -21,11 +21,27 @@
         <div class="list_left">{{ formater(item.eventStartTime) }}</div>
         <div
           class="list_right"
-          :style="{ borderLeft: '2px solid ' + eventType[item.eventType] }"
+          :style="{
+            borderLeft:
+              '2px solid ' +
+              (item.eventStatus === 2 ? '#70bbf4' : eventType[item.eventType])
+          }"
         >
           <div class="list_right_context">
-            <span v-if="item.eventType === 6 || item.eventType === 10">
+            <span v-if="item.eventType === 6" :style="{ color: '#999999' }">
               {{ item.eventDescription }}
+            </span>
+            <span
+              v-else-if="item.eventType === 1"
+              :style="{ color: '#999999' }"
+            >
+              空闲
+            </span>
+            <span
+              v-else-if="item.eventType === 10"
+              :style="{ color: '#999999' }"
+            >
+              请假
             </span>
             <span v-else
               >{{
@@ -35,7 +51,9 @@
                 '-' +
                 item.eventDescription
               }}
-              <span v-show="item.completionResult"
+              <span v-show="item.eventStatus === 6">(飞机)</span>
+              <span v-show="item.eventStatus === 10">(爽约)</span>
+              <span v-show="item.completionResult && item.eventStatus === 2"
                 >({{ item.completionResult }})</span
               >
               <img
@@ -187,7 +205,9 @@
             :style="{ margin: '0 10px' }"
             >改约</van-button
           >
-          <van-button type="primary" size="small">添加跟进</van-button>
+          <van-button type="primary" size="small" @click="handleAddFollowUp"
+            >添加跟进</van-button
+          >
         </div>
       </div>
     </van-action-sheet>
@@ -284,8 +304,12 @@ export default {
     }
     //  选中事件后弹出详情
     const detailView = async (item: any) => {
-      //自定义事件跟请假不能弹窗
-      if (item.eventType === 6 || item.eventType === 10) {
+      //自定义事件,请假,空闲不能弹窗
+      if (
+        item.eventType === 6 ||
+        item.eventType === 10 ||
+        item.eventType === 1
+      ) {
         // Toast('不能查看自定义事件跟请假事件')
         return false
       }
@@ -421,6 +445,25 @@ export default {
       )
     }
 
+    // 添加跟进
+    const handleAddFollowUp = () => {
+      console.log(detailData.data.eventUserid)
+
+      window.open(
+        `https://blue.planplus.cn/chat-tool-bar/customer/#/FollowUpV2?externaluserid=${
+          detailData.data.externalUserId
+        }&uid=${event.data.eventUserid}&userId=${sessionStorage.getItem(
+          'userId'
+        )}&planType=${event.data.eventType}&consultant=${
+          userInfo.data.name
+        }&mobile=${
+          event.data.mobile || event.data.eventUserPhone
+        }&calendar=1&unionId=${event.data.unionId}&blueUserId=${
+          detailData.data.externalUserId
+        }`
+      )
+    }
+
     // 设置理财师信息
     const setUserInfo = (data: any) => {
       userInfo.data = data
@@ -450,7 +493,8 @@ export default {
       handleContract,
       userInfo,
       setUserInfo,
-      toUserDetail
+      toUserDetail,
+      handleAddFollowUp
     }
   }
 }
@@ -487,7 +531,7 @@ export default {
     .list_left {
       display: inline-block;
       position: relative;
-      //top: -20%;
+      top: -20%;
       color: #999999;
       font-size: 12px;
       font-weight: 400;
