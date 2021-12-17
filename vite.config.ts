@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, root)
 
   let config = {
+    base: env.VITE_BASE_API,
     plugins: [vue(), qiankun('vue3Vite', { useDevMode })],
     resolve: {
       alias: {
