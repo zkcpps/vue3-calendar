@@ -14,6 +14,7 @@ function pathResolve(dir: string) {
 export default defineConfig(({ mode }) => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
+
   let config = {
     plugins: [vue(), qiankun('vue3Vite', { useDevMode })],
     resolve: {
@@ -25,7 +26,7 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0', // 暴露内网ip
       port: 3000,
       cors: true,
-      origin: 'https://blue.planplus.cn/chat-tool-bar/calender-mobile'
+      origin: mode === 'development' ? env.VITE_ORIGIN_DEV : env.VITE_BASE_API
     },
     output: {
       // 把子应用打包成 umd 库格式
