@@ -13,8 +13,7 @@ import {
   CellGroup,
   Button,
   Popup,
-  Image,
-  Lazyload
+  Image
 } from 'vant'
 import routes from './router'
 import 'vant/lib/index.css'
@@ -44,10 +43,6 @@ instance.use(Button)
 instance.use(Popup)
 instance.use(Image)
 
-instance.use(Lazyload, {
-  lazyComponent: true
-})
-
 declare global {
   interface Window {
     Explain: any
@@ -58,7 +53,7 @@ declare global {
 }
 
 function render(props = {}) {
-  const { container } = props
+  const { container } = props as any
   history = createWebHashHistory(
     qiankunWindow.__POWERED_BY_QIANKUN__ ? '/calendar-mobile' : '/'
   )

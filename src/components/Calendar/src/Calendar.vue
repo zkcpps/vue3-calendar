@@ -15,48 +15,54 @@
         class="content"
         :style="{ height: calendarType === 'week' ? '15vh' : '36.5vh' }"
       >
-        <lazy-component preload="15vh">
-          <ul>
-            <li
-              v-for="(item, index) in days.monthDatas"
-              :key="`day-${index}`"
-              @click="clickDate(item, $event)"
-              :id="item.dateString"
-              v-lazy="li"
+        <!-- <lazy-component preload="15vh"> -->
+        <ul>
+          <li
+            v-for="(item, index) in days.monthDatas"
+            :key="`day-${index}`"
+            @click="clickDate(item, $event)"
+            :id="item.dateString"
+          >
+            <span
+              class="day"
+              v-bind:class="{
+                current:
+                  item.dateString === currentDateString &&
+                  item.dateString !== formatTime(currentDate),
+                active: item.dateString === formatTime(currentDate)
+              }"
             >
-              <span
-                class="day"
-                v-bind:class="{
-                  current:
-                    item.dateString === currentDateString &&
-                    item.dateString !== formatTime(currentDate),
-                  active: item.dateString === formatTime(currentDate)
-                }"
-              >
-                {{ item.value }}
-              </span>
-              <div class="icon">
-                <img
-                  v-if="item.status === 1"
-                  src="@/assets/images/finish.png"
-                />
-                <img
-                  v-if="item.status === 2"
-                  src="@/assets/images/no_finish.png"
-                />
-              </div>
-            </li>
-          </ul>
-        </lazy-component>
+              {{ item.value }}
+            </span>
+            <div class="icon">
+              <img v-if="item.status === 1" src="@/assets/images/finish.png" />
+              <img
+                v-if="item.status === 2"
+                src="@/assets/images/no_finish.png"
+              />
+            </div>
+          </li>
+        </ul>
+        <!-- </lazy-component> -->
       </div>
     </div>
-    <div class="showDate" @touchstart="touchstart" @touchmove="touchend">
+    <div
+      class="showDate"
+      @touchstart="touchstart"
+      @touchmove="touchmove"
+      @touchend="touchend"
+    >
       <span v-show="showDate(currentDate) !== ''"
         >{{ showDate(currentDate) }} &nbsp;·&nbsp;</span
       >&nbsp; <span>{{ formatTime(currentDate, 'MM月DD日') }}</span
       >&nbsp;
       <span>{{ showDay(currentDate) }}</span>
     </div>
+
+    <!-- 上滑进入 -->
+    <transition name="van-slide-up">
+      <div v-show="visible">Slide Up</div>
+    </transition>
   </div>
 </template>
 
@@ -97,6 +103,12 @@ export default {
 
     const startY = ref(0)
 
+    // 滑动标记，结束标记
+    let flag = true
+
+    // 记录是否是通过点击更改日期
+    let isClickDate = false
+
     // 格式化时间
     const formatTime = (date, format = 'YYYYMMDD') => dayjs(date).format(format)
 
@@ -115,20 +127,29 @@ export default {
       startY.value = e.changedTouches[0].pageY
     }
 
-    const touchend = (e) => {
-      if (e.changedTouches[0].pageY - startY.value < -10) {
+    const touchmove = (e) => {
+      if (e.changedTouches[0].pageY - startY.value < -30 && flag) {
         if (calendarType !== 'week') {
+          console.log('week')
           changeType('week')
           scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 上滑到周要定位到选中的日期那里
+          flag = false
         }
       }
-      if (e.changedTouches[0].pageY - startY.value > 30) {
+      if (e.changedTouches[0].pageY - startY.value > 30 && flag) {
         if (calendarType !== 'month') {
+          console.log('month')
           changeType('month')
           scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 上滑到周要定位到选中的日期那里
+          flag = false
         }
       }
     }
+
+    const touchend = () => {
+      flag = true
+    }
+
     watchEffect(() => {
       // 获取数据
       fetchCustomerEventStatus({
@@ -149,16 +170,20 @@ export default {
     })
 
     watchEffect(() => {
-      scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 左右切换日期监听日期并跳转到日期
+      if (!isClickDate) {
+        scrollToDomById(formatTime(props.date, 'YYYYMMDD')) // 左右切换日期监听日期并跳转到日期
+      }
     })
 
     // 点击选中日期
     const clickDate = (date) => {
+      isClickDate = true
       context.emit('changeCurrentDate', date.dateString)
     }
 
-    // 点击选中日期
+    // 更改选中日期暴露给外边
     const changeType = (data) => {
+      isClickDate = false
       context.emit('changeType', data)
     }
 
@@ -188,6 +213,7 @@ export default {
       calendarType,
       clickDate,
       touchstart,
+      touchmove,
       touchend,
       formatTime,
       showDate,
