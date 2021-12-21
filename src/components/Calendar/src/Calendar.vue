@@ -6,7 +6,11 @@
     >
       <div class="header">
         <ul>
-          <li v-for="(item, index) in Header" :key="`header-${index}`">
+          <li
+            v-for="(item, index) in Header"
+            :key="`header-${index}`"
+            :style="{ opacity: index === 0 || index === 6 ? '0.5' : '1' }"
+          >
             {{ item }}
           </li>
         </ul>
@@ -25,6 +29,9 @@
           >
             <span
               :data-index="index"
+              :style="{
+                opacity: index % 7 === 0 || index % 7 === 6 ? '0.5' : '1'
+              }"
               class="day"
               v-bind:class="{
                 current:
@@ -272,8 +279,8 @@ export default {
       position: fixed;
       top: 6.5vh;
       width: 100%;
-      font-size: 12px;
-      color: #333333;
+      font-size: 14px;
+      color: #222222;
       //border-bottom: 1px solid #e8e8e8;
       z-index: 999;
       ul {
@@ -297,7 +304,7 @@ export default {
       }
       .active {
         width: 7.2vw;
-        height: 7.2vw;
+        // height: 7.2vw;
         color: #ffffff;
         line-height: 7.2vw;
         background: #1690ff;

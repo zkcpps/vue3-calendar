@@ -19,7 +19,6 @@ export default {
   setup() {
     let Top = ref()
     let Left = ref()
-
     const move = (e: any) => {
       // 防止与touchstart冲突
       e.preventDefault()
@@ -49,17 +48,18 @@ export default {
 <style lang="less" scoped>
 .flownav {
   position: fixed;
-  top: 200;
+  top: 70vh;
   right: 0;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background-color: #fcfcfc;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4);
   color: rgba(22, 144, 255, 1);
   text-align: center;
-  line-height: 60px;
+  line-height: 50px;
   z-index: 3000;
+  font-size: 12px;
 }
 // .activeRight {
 //   width: 40px;

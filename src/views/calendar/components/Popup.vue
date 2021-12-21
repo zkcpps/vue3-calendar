@@ -113,9 +113,9 @@ export default {
 }
 // 按钮
 .buttonstyle {
-  height: 40px;
+  height: 32px;
   button {
-    width: 110%;
+    width: 120%;
     height: 80%;
     top: 16%;
     border-radius: 6px;
