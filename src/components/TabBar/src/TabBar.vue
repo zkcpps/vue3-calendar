@@ -12,7 +12,7 @@ import inactive_worker from '@/assets/images/inactive_worker.png'
 const router = useRouter()
 let active = ref(0)
 const onChange = (index) => {
-  active = index
+  active.value = index
   if (index === 0) {
     router.push('/calendar')
   } else if (index === 1) {

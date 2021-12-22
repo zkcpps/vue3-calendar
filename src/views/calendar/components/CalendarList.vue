@@ -23,7 +23,11 @@
           :style="{
             borderLeft:
               '2px solid ' +
-              (item.eventStatus === 2 ? '#70bbf4' : eventType[item.eventType])
+              (item.eventStatus === 2 // 完成
+                ? '#70bbf4'
+                : item.eventStatus === 6 // 请假
+                ? '#b9bbcd'
+                : eventType[item.eventType])
           }"
         >
           <div class="list_right_context">
@@ -108,7 +112,19 @@
             </div>
           </div>
           <!-- 链接 -->
-          <a @click="toUserDetail">客户详情></a>
+          <a @click="toUserDetail"
+            ><span
+              >客户详情
+              <van-icon
+                name="arrow"
+                style="
+                   {
+                    color: #1690ff;
+                  }
+                "
+              />
+            </span>
+          </a>
         </div>
         <div class="contents">
           <li>
@@ -152,61 +168,71 @@
 
           <li>
             <span> 上次备注:</span>
-            <p>{{ detailData.data.remark || '--' }}</p>
+            <p class="">{{ detailData.data.remark || '--' }}</p>
           </li>
         </div>
-
-        <div v-show="isCurrentUserId" class="footer">
-          <van-button
-            @click="toPulanPlan"
-            plain
-            type="primary"
-            size="small"
-            :style="{ margin: '0 10px' }"
-            >规划方案</van-button
-          >
-          <van-button
-            @click="handleSendNews"
-            v-show="detailData.data.externalUserId && detailData.data.isFirend"
-            plain
-            type="primary"
-            size="small"
-            >发消息</van-button
-          >
-          <van-button
-            v-show="
-              detailData.data.externalUserId &&
-              isMobile() &&
-              !detailData.data.isFirend
+        <div class="footerContent">
+          <van-divider
+            style="
+               {
+                margin: 0;
+              }
             "
-            @click="handleAddFriends"
-            plain
-            type="primary"
-            size="small"
-            :style="{ margin: '0 10px' }"
-            >加好友</van-button
-          >
-          <van-button
-            v-show="!detailData.data.externalUserId && isMobile()"
-            @click="handleAddFriends"
-            plain
-            type="primary"
-            size="small"
-            :style="{ margin: '0 10px' }"
-            >加好友</van-button
-          >
+          />
+          <div v-show="isCurrentUserId" class="footer">
+            <van-button
+              @click="toPulanPlan"
+              plain
+              type="primary"
+              size="small"
+              :style="{ margin: '0 10px' }"
+              >规划方案</van-button
+            >
+            <van-button
+              @click="handleSendNews"
+              v-show="
+                detailData.data.externalUserId && detailData.data.isFirend
+              "
+              plain
+              type="primary"
+              size="small"
+              >发消息</van-button
+            >
+            <van-button
+              v-show="
+                detailData.data.externalUserId &&
+                isMobile() &&
+                !detailData.data.isFirend
+              "
+              @click="handleAddFriends"
+              plain
+              type="primary"
+              size="small"
+              :style="{ margin: '0 10px' }"
+              >加好友</van-button
+            >
+            <van-button
+              v-show="!detailData.data.externalUserId && isMobile()"
+              @click="handleAddFriends"
+              plain
+              type="primary"
+              size="small"
+              :style="{ margin: '0 10px' }"
+              >加好友</van-button
+            >
 
-          <van-button
-            @click="handleContract"
-            plain
-            type="primary"
-            size="small"
-            :style="{ margin: '0 10px' }"
-            >改约</van-button
-          >
-          <van-button type="primary" size="small" @click="handleAddFollowUp"
-            >添加跟进</van-button
-          >
+            <van-button
+              @click="handleContract"
+              plain
+              type="primary"
+              size="small"
+              :style="{ margin: '0 10px' }"
+              >改约</van-button
+            >
+            <van-button type="primary" size="small" @click="handleAddFollowUp"
+              >添加跟进</van-button
+            >
+          </div>
         </div>
       </div>
     </van-action-sheet>
@@ -515,6 +541,7 @@ export default {
   .header_resoult {
     display: inline-block;
     margin-left: 10px;
+    margin-top: 6px;
     span {
       font-size: 12px;
       margin-left: 8px;
@@ -564,9 +591,10 @@ export default {
 // 点击事件的弹窗
 .content {
   background-color: #ffffff;
-  padding: 16px 16px;
+  padding: 16px 22px;
+  margin-bottom: 60px;
   .detail {
-    position: sticky;
+    position: relative;
     top: 0;
     background-color: #ffffff;
     display: flex;
@@ -624,34 +652,41 @@ export default {
     }
   }
   //   底部按钮区域
-  .footer {
-    background-color: ffffff;
-    position: fixed;
-    left: 0;
-    bottom: 2vh;
-    width: 100%;
-    height: 60px;
-    border-top: 1px solid #e8e8e8;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    button {
-      width: 20vw;
+  .footerContent {
+    background-color: #fff;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 10000;
+    .footer {
+      width: 100%;
+      height: 6vh;
+      padding: 10px;
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+      button {
+        width: 20vw;
+      }
     }
   }
 }
 //  弹窗占屏幕百分比
 :deep(.van-action-sheet) {
   height: 50%;
+  max-height: 70%;
 }
 // 弹窗标题样式
 :deep(.van-action-sheet__header) {
   text-align: center;
-  margin-top: 8px;
-  font-size: 20px;
+  margin-top: 6px;
   border-bottom: 1px solid #e8e8e8;
   color: #333333;
-  font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
+}
+:deep(.van-divider) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 </style>

@@ -13,7 +13,8 @@ import {
   CellGroup,
   Button,
   Popup,
-  Image
+  Image,
+  Divider
 } from 'vant'
 import routes from './router'
 import 'vant/lib/index.css'
@@ -42,7 +43,7 @@ instance.use(CellGroup)
 instance.use(Button)
 instance.use(Popup)
 instance.use(Image)
-
+instance.use(Divider)
 declare global {
   interface Window {
     Explain: any
