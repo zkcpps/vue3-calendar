@@ -38,7 +38,7 @@ export default {
   },
   setup() {
     // 测试用，正式删除
-    sessionStorage.setItem('userId', 18145736491)
+    // sessionStorage.setItem('userId', 18145736491)
     const currentDate = ref(new Date())
     const userId = ref(sessionStorage.getItem('userId'))
     const type = ref('week')
