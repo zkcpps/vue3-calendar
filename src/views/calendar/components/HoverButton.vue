@@ -5,7 +5,7 @@
     @touchmove="move"
     :style="{ top: Top + 'px', left: Left + 'px' }"
   >
-    周视图
+    <img src="@/assets/images/week_show.png" />
   </div>
 </template>
 
@@ -49,17 +49,14 @@ export default {
 .flownav {
   position: fixed;
   top: 70vh;
-  right: 0;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4);
-  color: rgba(22, 144, 255, 1);
-  text-align: center;
-  line-height: 50px;
+  right: 0;
   z-index: 3000;
-  font-size: 12px;
+  img {
+    width: 50px;
+    height: 50px;
+  }
 }
 // .activeRight {
 //   width: 40px;
