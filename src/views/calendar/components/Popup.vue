@@ -139,6 +139,10 @@ export default {
   color: #333333;
   font-weight: 600;
 }
+//  弹窗占屏幕百分比
+:deep(.buttonstyle button) {
+  border-radius: 4px;
+}
 //  搜索结果渲染的每一项
 .searchDataItem {
   //   border-bottom: 1px solid red;

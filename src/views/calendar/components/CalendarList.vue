@@ -530,7 +530,7 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 16px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -657,6 +657,7 @@ export default {
     position: absolute;
     bottom: 0px;
     left: 0px;
+    right: 20px;
     z-index: 10000;
     .footer {
       width: 100%;
@@ -679,7 +680,7 @@ export default {
 // 弹窗标题样式
 :deep(.van-action-sheet__header) {
   text-align: center;
-  margin-top: 6px;
+  margin-top: 0px;
   border-bottom: 1px solid #e8e8e8;
   color: #333333;
   font-size: 16px;
