@@ -60,9 +60,12 @@
       @touchmove="touchmove"
       @touchend="touchend"
     >
-      <span v-show="showDate(currentDate) !== ''"
-        >{{ showDate(currentDate) }} &nbsp;·&nbsp;</span
-      >&nbsp; <span>{{ formatTime(currentDate, 'MM月DD日') }}</span
+      <span
+        :style="{
+          display: showDate(currentDate) === '' ? 'none' : 'inline-block'
+        }"
+        >{{ showDate(currentDate) }} &nbsp;·&nbsp;&nbsp; </span
+      ><span>{{ formatTime(currentDate, 'MM月DD日') }}</span
       >&nbsp;
       <span>{{ showDay(currentDate) }}</span>
     </div>
