@@ -1,8 +1,8 @@
 <template>
   <div class="blank">
     <div class="img">
-      <img src="@/assets/images/blank.png" />
-      <div class="desc">开发中...</div>
+      <img src="@/assets/images/not_work.png" />
+      <div class="desc">暂无工作安排</div>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@
     transform: translateY(-50%) translateX(-50%);
     img {
       width: 180px;
-      height: 120px;
     }
     .desc {
       height: 40px;

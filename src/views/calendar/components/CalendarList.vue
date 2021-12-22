@@ -75,6 +75,9 @@
         </div>
       </van-cell>
     </van-cell-group>
+    <div v-if="data.data.length === 0" class="notWork">
+      <NotWork />
+    </div>
     <!-- 点击事件的详情弹窗 -->
     <van-action-sheet v-model:show="show" title="查看事件" :round="false">
       <div class="content">
@@ -243,6 +246,8 @@
 import { reactive, ref, watchEffect, computed } from 'vue'
 import { Toast } from 'vant'
 import Popup from './Popup.vue'
+import NotWork from '@/components/NotWork'
+
 import {
   fetchCalEventsGetCalEvents,
   fetchCustomerLastFollowInfo,
@@ -255,7 +260,8 @@ import { eventTypeMap } from '../data'
 export default {
   name: '',
   components: {
-    Popup
+    Popup,
+    NotWork
   },
   props: {
     date: Date,
@@ -590,6 +596,11 @@ export default {
       }
     }
   }
+}
+
+.notWork {
+  position: relative;
+  top: 10vh;
 }
 
 // 点击事件的弹窗
