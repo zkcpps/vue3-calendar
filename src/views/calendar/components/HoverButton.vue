@@ -5,7 +5,7 @@
     @touchmove="move"
     :style="{ top: Top + 'px', left: Left + 'px' }"
   >
-    周视图
+    <img src="@/assets/images/week_show.png" />
   </div>
 </template>
 
@@ -19,7 +19,6 @@ export default {
   setup() {
     let Top = ref()
     let Left = ref()
-
     const move = (e: any) => {
       // 防止与touchstart冲突
       e.preventDefault()
@@ -49,17 +48,15 @@ export default {
 <style lang="less" scoped>
 .flownav {
   position: fixed;
-  top: 200;
+  top: 70vh;
+  width: 50px;
+  height: 50px;
   right: 0;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #fcfcfc;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
-  color: rgba(22, 144, 255, 1);
-  text-align: center;
-  line-height: 60px;
   z-index: 3000;
+  img {
+    width: 50px;
+    height: 50px;
+  }
 }
 // .activeRight {
 //   width: 40px;
