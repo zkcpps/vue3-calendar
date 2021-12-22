@@ -11,4 +11,4 @@ deploy:
     - 'sh /usr/share/nginx/projects/deploy.sh $CI_PROJECT_NAME /usr/share/nginx/html/chat-tool-bar/$CI_PROJECT_NAME/ "dist/*"'
     - 'script'
   only:
-    - master@chat-tool-bar/calender-mobile
+    - master@chat-tool-bar/calendar-mobile
