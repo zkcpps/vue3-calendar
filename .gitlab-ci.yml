@@ -8,7 +8,7 @@ deploy:
     - blue-deploy-shell
   script:
     - 'ssh gitlab-runner@112.124.16.222 << script'
-    - 'sh /usr/share/nginx/projects/deploy.sh $CI_PROJECT_NAME /usr/share/nginx/html/chat-tool-bar/$CI_PROJECT_NAME/ "build/*"'
+    - 'sh /usr/share/nginx/projects/deploy.sh $CI_PROJECT_NAME /usr/share/nginx/html/chat-tool-bar/$CI_PROJECT_NAME/ "dist/*"'
     - 'script'
   only:
     - master@chat-tool-bar/calender-mobile
