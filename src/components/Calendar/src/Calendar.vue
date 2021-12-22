@@ -330,7 +330,7 @@ export default {
     line-height: 3vh;
     padding-top: 2vh;
     padding-left: 5vw;
-    font-size: 14px;
+    font-size: 16px;
     font-family: PingFangSC;
     font-weight: 600;
     color: #333333;
