@@ -75,6 +75,9 @@
         </div>
       </van-cell>
     </van-cell-group>
+    <div v-if="data.data.length === 0" class="notWork">
+      <NotWork />
+    </div>
     <!-- 点击事件的详情弹窗 -->
     <van-action-sheet v-model:show="show" title="查看事件" :round="false">
       <div class="content">
@@ -101,7 +104,7 @@
                   :style="{ width: '16px', height: '16px' }"
                 />
               </span>
-              <span ref="number"
+              <span ref="number" class="mobile"
                 >{{ detailData.data.mobile }}
                 <img
                   src="@/assets/images/copy.png"
@@ -243,19 +246,22 @@
 import { reactive, ref, watchEffect, computed } from 'vue'
 import { Toast } from 'vant'
 import Popup from './Popup.vue'
+import NotWork from '@/components/NotWork'
+
 import {
   fetchCalEventsGetCalEvents,
   fetchCustomerLastFollowInfo,
   fetchTrainProLogin
 } from '@/services/calendar'
-import { formater, isMobile } from '@/utils/tool'
+import { formater, getParams, isMobile } from '@/utils/tool'
 import { getFirstAndLastTimes } from '@/utils/calendar'
 import dayjs from 'dayjs'
 import { eventTypeMap } from '../data'
 export default {
   name: '',
   components: {
-    Popup
+    Popup,
+    NotWork
   },
   props: {
     date: Date,
@@ -378,7 +384,11 @@ export default {
       })
 
       if (resp.code === 200 && resp.data) {
-        window.open(resp.data)
+        const params = getParams(resp.data)
+
+        window.open(
+          `https://report.planplus.cn/report/loginLoading?channel=planPro&customerId=${params.customerId}&currentUserId=${params.userId}`
+        )
         return
       }
 
@@ -588,11 +598,15 @@ export default {
   }
 }
 
+.notWork {
+  position: relative;
+  top: 10vh;
+}
+
 // 点击事件的弹窗
 .content {
   background-color: #ffffff;
   padding: 16px 22px;
-  margin-bottom: 60px;
   .detail {
     position: relative;
     top: 0;
@@ -604,18 +618,22 @@ export default {
       display: flex;
       justify-content: flex-start;
       .imge {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
       }
       .name {
+        height: 40px;
         .nikeName {
           font-weight: bolder;
           color: #333333;
           font-size: 16px;
         }
+        .mobile {
+          font-size: 14px;
+        }
         display: flex;
         flex-direction: column;
-        margin-left: 10px;
+        margin-left: 8px;
         color: #999999;
         font-weight: 400;
       }
