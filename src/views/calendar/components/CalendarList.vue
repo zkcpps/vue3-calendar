@@ -79,7 +79,12 @@
       <NotWork />
     </div>
     <!-- 点击事件的详情弹窗 -->
-    <van-action-sheet v-model:show="show" title="查看事件" :round="false">
+    <van-action-sheet
+      v-model:show="show"
+      title="查看事件"
+      :round="false"
+      @closed="onClosed"
+    >
       <div class="content">
         <div class="detail">
           <div class="detail_left">
@@ -267,7 +272,7 @@ export default {
     date: Date,
     userId: String
   },
-  emits: ['changeUserId'],
+  emits: ['changeUserId', 'changeShowButton'],
   setup(props, context) {
     //   接收的数据
     let data: any = reactive({ data: [] })
@@ -348,6 +353,7 @@ export default {
 
       event.data = item
       show.value = true
+      context.emit('changeShowButton', false) // 隐藏悬浮按钮
       const res = await fetchCustomerLastFollowInfo({
         id: item.id + '',
         mobile: item.eventUserPhone + '',
@@ -504,6 +510,11 @@ export default {
       userInfo.data = data
     }
 
+    // 弹窗关闭方法，触发悬浮球显示
+    const onClosed = () => {
+      context.emit('changeShowButton', true)
+    }
+
     return {
       data,
       event,
@@ -529,7 +540,8 @@ export default {
       userInfo,
       setUserInfo,
       toUserDetail,
-      handleAddFollowUp
+      handleAddFollowUp,
+      onClosed
     }
   }
 }
@@ -653,20 +665,22 @@ export default {
     li {
       display: flex;
       margin-bottom: 5px;
+      list-style: none;
+      font-size: 14px;
+      vertical-align: bottom;
       span {
         margin-right: 5px;
-        list-style: none;
         color: #666666;
-        font-size: 14px;
+        line-height: 20px;
       }
-    }
-    p {
-      margin: 0;
-      padding: 0;
-      width: 70%;
-      display: inline-block;
-      font-size: 14px;
-      color: #333333;
+      p {
+        margin: 0;
+        padding: 0;
+        width: 70%;
+        display: inline-block;
+        color: #333333;
+        line-height: 20px;
+      }
     }
   }
   //   底部按钮区域
