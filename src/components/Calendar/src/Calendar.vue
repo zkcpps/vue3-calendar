@@ -307,12 +307,13 @@ export default {
       }
       .active {
         width: 7.2vw;
-        // height: 7.2vw;
+        height: 7.2vw;
         color: #ffffff;
         line-height: 7.2vw;
         background: #1690ff;
         text-align: center;
         border-radius: 50%;
+        overflow: hidden;
       }
       .current {
         color: #1690ff;

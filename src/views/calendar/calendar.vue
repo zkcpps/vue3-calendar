@@ -7,7 +7,7 @@
       @changeCurrentDate="changeCurrentDate"
       @changeType="changeType"
     />
-    <HoverButton @click="toWeekView" />
+    <HoverButton @click="toWeekView" v-show="showButton" />
     <CalendarList
       :style="{
         overflowY: 'scroll',
@@ -18,6 +18,7 @@
       @touchstart="touchstart"
       @touchend="touchend"
       @changeUserId="changeUserId"
+      @changeShowButton="changeShowButton"
     ></CalendarList>
   </div>
 </template>
@@ -43,6 +44,7 @@ export default {
     const userId = ref(sessionStorage.getItem('userId'))
     const type = ref('week')
     let touchstarts = ref()
+    const showButton = ref(true) // 控制打开弹框时隐藏
     const changeCurrentDate = (dateString) => {
       currentDate.value = new Date(dayjs(dateString).valueOf())
     }
@@ -77,6 +79,11 @@ export default {
       )
     }
 
+    // 改变悬浮按钮显示
+    const changeShowButton = (flag) => {
+      showButton.value = flag
+    }
+
     return {
       currentDate,
       userId,
@@ -86,7 +93,9 @@ export default {
       touchend,
       changeUserId,
       changeType,
-      toWeekView
+      toWeekView,
+      showButton,
+      changeShowButton
     }
   }
 }
