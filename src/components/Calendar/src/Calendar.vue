@@ -275,7 +275,7 @@ export default {
     .content {
       overflow-y: scroll;
       position: fixed;
-      top: 13.5vh;
+      top: 14vh;
       width: 100%;
       font-size: 14px;
       color: #222222;
@@ -337,6 +337,7 @@ export default {
     top: 6vh;
     background: #ffffff;
     border-bottom: 1px solid #e8e8e8;
+    z-index: 999;
   }
 }
 </style>
