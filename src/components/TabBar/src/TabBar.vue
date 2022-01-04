@@ -7,8 +7,8 @@ import active_bussiness from '@/assets/images/active_bussiness.png'
 import inactive_bussiness from '@/assets/images/inactive_bussiness.png'
 import active_customer from '@/assets/images/active_customer.png'
 import inactive_customer from '@/assets/images/inactive_customer.png'
-import active_worker from '@/assets/images/active_worker.png'
-import inactive_worker from '@/assets/images/inactive_worker.png'
+import active_worker from '@/assets/images/active_mine.png'
+import inactive_worker from '@/assets/images/inactive_mine.png'
 const router = useRouter()
 let active = ref(0)
 const onChange = (index) => {
@@ -38,7 +38,7 @@ const icon = {
 <template>
   <van-tabbar v-model="active" @change="onChange">
     <van-tabbar-item>
-      <span>工作日历</span>
+      <span>日历</span>
       <template #icon="props">
         <img
           :src="props.active ? icon.active_calendar : icon.inactive_calendar"
@@ -46,7 +46,7 @@ const icon = {
       </template>
     </van-tabbar-item>
     <van-tabbar-item>
-      <span>客户列表</span>
+      <span>客户</span>
       <template #icon="props">
         <img
           :src="props.active ? icon.active_customer : icon.inactive_customer"
@@ -54,7 +54,7 @@ const icon = {
       </template>
     </van-tabbar-item>
     <van-tabbar-item>
-      <span>业务评分</span>
+      <span>应用</span>
       <template #icon="props">
         <img
           :src="props.active ? icon.active_bussiness : icon.inactive_bussiness"
@@ -62,7 +62,7 @@ const icon = {
       </template>
     </van-tabbar-item>
     <van-tabbar-item>
-      <span>工作台</span>
+      <span>我的</span>
       <template #icon="props">
         <img :src="props.active ? icon.active_worker : icon.inactive_worker" />
       </template>
