@@ -69,11 +69,6 @@
       >&nbsp;
       <span>{{ showDay(currentDate) }}</span>
     </div>
-
-    <!-- 上滑进入 -->
-    <transition name="van-slide-up">
-      <div v-show="visible">Slide Up</div>
-    </transition>
   </div>
 </template>
 
@@ -255,7 +250,7 @@ export default {
       padding: 0;
       margin: 0;
       position: fixed;
-      top: 0;
+      top: 8vh;
       width: 100%;
       font-size: 12px;
       font-family: PingFangSC;
@@ -280,7 +275,7 @@ export default {
     .content {
       overflow-y: scroll;
       position: fixed;
-      top: 6.5vh;
+      top: 13.5vh;
       width: 100%;
       font-size: 14px;
       color: #222222;
@@ -330,7 +325,7 @@ export default {
     }
   }
   .showDate {
-    //height: 3vh;
+    height: 5vh;
     line-height: 3vh;
     padding-top: 2vh;
     padding-left: 5vw;
@@ -339,8 +334,9 @@ export default {
     font-weight: 600;
     color: #333333;
     position: relative;
+    top: 6vh;
     background: #ffffff;
-    z-index: 1000;
+    border-bottom: 1px solid #e8e8e8;
   }
 }
 </style>

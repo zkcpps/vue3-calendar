@@ -1,5 +1,11 @@
 <template>
   <div>
+    <calendar-header
+      :userId="userId"
+      :headerData="headerDatas"
+      @changeUserId="changeUserId"
+      @setUserInfo="setUserInfo"
+    />
     <Calendar
       :date="currentDate"
       :userId="userId"
@@ -17,34 +23,41 @@
       :date="currentDate"
       @touchstart="touchstart"
       @touchend="touchend"
-      @changeUserId="changeUserId"
       @changeShowButton="changeShowButton"
+      @setHeaderData="setHeaderData"
     ></CalendarList>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import Calendar from '../../components/Calendar'
 import Popup from './components/Popup.vue'
 import HoverButton from './components/HoverButton.vue'
 import CalendarList from './components/CalendarList.vue'
+import CalendarHeader from './components/CalendarHeader.vue'
+
 import dayjs from 'dayjs'
 export default {
   components: {
     Calendar,
     Popup,
     HoverButton,
-    CalendarList
+    CalendarList,
+    CalendarHeader
   },
   setup() {
     // 测试用，正式删除
-    // sessionStorage.setItem('userId', 18145736491)
+    //sessionStorage.setItem('userId', 18145736491)
     const currentDate = ref(new Date())
     const userId = ref(sessionStorage.getItem('userId'))
     const type = ref('week')
+    const headerDatas = reactive({})
     let touchstarts = ref()
     const showButton = ref(true) // 控制打开弹框时隐藏
+
+    const userInfo = reactive({}) // 存储userInfo，用于列表事件
+
     const changeCurrentDate = (dateString) => {
       currentDate.value = new Date(dayjs(dateString).valueOf())
     }
@@ -84,6 +97,15 @@ export default {
       showButton.value = flag
     }
 
+    // 存储header数据
+    const setHeaderData = (value) => {
+      headerDatas.data = value
+    }
+
+    const setUserInfo = (data) => {
+      userInfo.data = data
+    }
+
     return {
       currentDate,
       userId,
@@ -95,7 +117,9 @@ export default {
       changeType,
       toWeekView,
       showButton,
-      changeShowButton
+      changeShowButton,
+      headerDatas,
+      setHeaderData
     }
   }
 }
