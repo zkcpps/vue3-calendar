@@ -1,15 +1,5 @@
 <template>
   <div>
-    <div class="header">
-      <div class="selector">
-        <Popup @Sondata="getdata" @setUserInfo="setUserInfo" />
-      </div>
-      <div class="header_resoult">
-        <span>共有{{ fna }}个FNA,</span>
-        <span>{{ report }}个解释报告,</span>
-        <span>{{ facilitate }}个促成</span>
-      </div>
-    </div>
     <van-cell-group class="body">
       <van-cell
         class="resoult_list"
@@ -256,7 +246,8 @@ import NotWork from '@/components/NotWork'
 import {
   fetchCalEventsGetCalEvents,
   fetchCustomerLastFollowInfo,
-  fetchTrainProLogin
+  fetchTrainProLogin,
+  fetchUserInfo
 } from '@/services/calendar'
 import { formater, getParams, isMobile } from '@/utils/tool'
 import { getFirstAndLastTimes } from '@/utils/calendar'
@@ -272,7 +263,7 @@ export default {
     date: Date,
     userId: String
   },
-  emits: ['changeUserId', 'changeShowButton'],
+  emits: ['changeShowButton', 'setHeaderData'],
   setup(props, context) {
     //   接收的数据
     let data: any = reactive({ data: [] })
@@ -333,11 +324,22 @@ export default {
           facilitate.value++
         }
       })
+      context.emit('setHeaderData', {
+        fna: fna.value,
+        report: report.value,
+        facilitate: facilitate.value
+      }) // 暴露header数据
     })
-    const getdata = (e: any) => {
-      let userId = e.data.userId
-      context.emit('changeUserId', userId)
-    }
+
+    // 获取理财师信息
+    fetchUserInfo({
+      userId: sessionStorage.getItem('userId')
+    }).then((res: any) => {
+      if (res.code === 200 && res.data) {
+        userInfo.data = res.data.name
+      }
+    })
+
     //  选中事件后弹出详情
     const detailView = async (item: any) => {
       //自定义事件,请假,空闲不能弹窗
@@ -505,11 +507,6 @@ export default {
       )
     }
 
-    // 设置理财师信息
-    const setUserInfo = (data: any) => {
-      userInfo.data = data
-    }
-
     // 弹窗关闭方法，触发悬浮球显示
     const onClosed = () => {
       context.emit('changeShowButton', true)
@@ -518,7 +515,6 @@ export default {
     return {
       data,
       event,
-      getdata,
       fna,
       report,
       facilitate,
@@ -538,7 +534,6 @@ export default {
       handleAddFriends,
       handleContract,
       userInfo,
-      setUserInfo,
       toUserDetail,
       handleAddFollowUp,
       onClosed
@@ -547,32 +542,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-// 头部区域
-.header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #ffffff;
-  .selector {
-    display: inline-block;
-  }
-  .header_resoult {
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 6px;
-    span {
-      font-size: 12px;
-      margin-left: 8px;
-      color: #666666;
-    }
-  }
-}
 // 结果列表
-
 .body {
   margin-bottom: 60px;
   .resoult_list {

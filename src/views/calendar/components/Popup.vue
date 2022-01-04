@@ -48,7 +48,6 @@ import { fetchUserInfo } from '@/services/calendar'
 import { Toast } from 'vant'
 export default {
   name: '',
-  emits: ['setUserInfo'],
   setup(props, ctx) {
     //   控制弹窗开关
     let show = ref(false)
@@ -90,7 +89,6 @@ export default {
     }).then((res: any) => {
       if (res.code === 200 && res.data) {
         showName.value = res.data.name
-        ctx.emit('setUserInfo', res.data)
       }
     })
 
