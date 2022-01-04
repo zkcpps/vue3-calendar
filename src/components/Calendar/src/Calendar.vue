@@ -245,8 +245,8 @@ export default {
     padding: 0;
     margin: 0;
     .header {
-      height: 6.5vh;
-      line-height: 6.5vh;
+      height: 5vh;
+      line-height: 5vh;
       padding: 0;
       margin: 0;
       position: fixed;
