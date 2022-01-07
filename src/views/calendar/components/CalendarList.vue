@@ -693,4 +693,7 @@ export default {
   padding: 0;
   width: 100%;
 }
+:deep(.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after) {
+  border-width: 0;
+}
 </style>
