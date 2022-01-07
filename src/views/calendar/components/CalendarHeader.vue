@@ -78,6 +78,7 @@ export default {
   top: 0;
   z-index: 1000;
   background-color: #ffffff;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
   .selector {
     display: inline-block;
   }
