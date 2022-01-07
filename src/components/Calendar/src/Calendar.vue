@@ -334,9 +334,10 @@ export default {
     //font-weight: 600;
     color: #333333;
     position: relative;
-    top: 6vh;
+    top: 8vh;
     background: #ffffff;
-    border-top: 10px solid #e8e8e8;
+    border-top: 2vh solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
     z-index: 999;
   }
 }
