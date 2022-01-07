@@ -87,9 +87,8 @@ export default {
 
     // 跳转周试图
     const toWeekView = () => {
-      window.open(
-        `https://blue.planplus.cn/chat-tool-bar/main-app/calender/#/?userId=${userId.value}&openWeek=true`
-      )
+      sessionStorage.setItem('openWeek', 'true')
+      window.location.href = `https://blue.planplus.cn/chat-tool-bar/main-app/calender/#/`
     }
 
     // 改变悬浮按钮显示
