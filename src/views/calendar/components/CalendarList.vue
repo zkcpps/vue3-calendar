@@ -545,7 +545,7 @@ export default {
 // 结果列表
 .body {
   margin-bottom: 60px;
-  margin-top: 45px;
+  margin-top: 30px;
   .resoult_list {
     .list_left {
       display: inline-block;

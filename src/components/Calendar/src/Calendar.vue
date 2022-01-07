@@ -240,13 +240,13 @@ export default {
       format('truetype'); /* Safari, Android, iOS */
 }
 .calendar_wrap {
-  background: #f6f6f6;
+  //background: #f6f6f6;
   .calendar {
     padding: 0;
     margin: 0;
     .header {
-      height: 5vh;
-      line-height: 5vh;
+      height: 6vh;
+      line-height: 6vh;
       padding: 0;
       margin: 0;
       position: fixed;
@@ -331,12 +331,12 @@ export default {
     padding-left: 5vw;
     font-size: 16px;
     font-family: PingFangSC;
-    font-weight: 600;
+    //font-weight: 600;
     color: #333333;
     position: relative;
     top: 6vh;
     background: #ffffff;
-    border-bottom: 1px solid #e8e8e8;
+    border-top: 10px solid #e8e8e8;
     z-index: 999;
   }
 }
