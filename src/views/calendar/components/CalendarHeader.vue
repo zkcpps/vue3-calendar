@@ -78,14 +78,17 @@ export default {
   top: 0;
   z-index: 1000;
   background-color: #ffffff;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0px 3px 2px#eee; /* 老的 Firefox */
+  box-shadow: 0px 3px 2px #eee;
+  //line-height: 32px;
   .selector {
     display: inline-block;
+    padding-bottom: 2px;
   }
   .header_resoult {
     display: inline-block;
-    margin-left: 10px;
-    margin-top: 6px;
+    padding-left: 10px;
+    padding-top: 4px;
     span {
       font-size: 12px;
       margin-left: 8px;
