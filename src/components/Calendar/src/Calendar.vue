@@ -336,8 +336,8 @@ export default {
     position: relative;
     top: 8vh;
     background: #ffffff;
-    border-top: 2vh solid #e8e8e8;
-    border-bottom: 1px solid #e8e8e8;
+    border-top: 1.5vh solid #eee;
+    border-bottom: 1px solid #eee;
     z-index: 999;
   }
 }
