@@ -13,7 +13,7 @@
   text-align: center;
   .img {
     position: absolute;
-    top: 50%;
+    top: 50px;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     img {
