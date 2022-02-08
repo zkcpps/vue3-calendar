@@ -325,9 +325,8 @@ export default {
     }
   }
   .showDate {
-    height: 5vh;
-    line-height: 3vh;
-    padding-top: 2vh;
+    height: 7vh;
+    line-height: 7vh;
     padding-left: 5vw;
     font-size: 16px;
     font-family: PingFangSC;
