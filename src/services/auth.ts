@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export async function fetchToken() {
   return request(
-    `https://bot.planplus.cn/v1/api/weixin/getToken/xiaolantongxue?uri=${encodeURIComponent(
+    `https://blue.planplus.cn/bluemate/v1/api/weixin/getToken/xiaolantongxue?uri=${encodeURIComponent(
       window.location.href.split('#')[0]
     )}`
   )
@@ -15,7 +15,7 @@ export async function fetchToken() {
  */
 export async function fetchAgentTicket() {
   return request(
-    `https://bot.planplus.cn/v1/api/weixin/getAgentTicket/xiaolantongxue?uri=${encodeURIComponent(
+    `https://blue.planplus.cn/bluemate/v1/api/weixin/getAgentTicket/xiaolantongxue?uri=${encodeURIComponent(
       window.location.href.split('#')[0]
     )}`
   )
