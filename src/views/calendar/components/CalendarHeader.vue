@@ -19,11 +19,6 @@ import { Toast } from 'vant'
 import Popup from './Popup.vue'
 import NotWork from '@/components/NotWork'
 
-import {
-  fetchCalEventsGetCalEvents,
-  fetchCustomerLastFollowInfo,
-  fetchTrainProLogin
-} from '@/services/calendar'
 import { formater, getParams, isMobile } from '@/utils/tool'
 import { getFirstAndLastTimes } from '@/utils/calendar'
 import dayjs from 'dayjs'
