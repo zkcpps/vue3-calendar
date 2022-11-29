@@ -356,11 +356,11 @@ export default {
       event.data = item
       show.value = true
       context.emit('changeShowButton', false) // 隐藏悬浮按钮
-      const res = await fetchCustomerLastFollowInfoNew({
-        id: item.id + '',
-        userId: item.userId,
-        blueUserId: item.blueUserId
-      })
+      const res = await fetchCustomerLastFollowInfoNew(
+        item.id + '',
+        item.blueUserId,
+        item.userId
+      )
       if (res.code !== 200) {
         Toast('获取事件详情失败')
       }
