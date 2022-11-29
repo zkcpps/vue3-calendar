@@ -56,6 +56,19 @@ export async function fetchCustomerLastFollowInfo(
 }
 
 /**
+ * 获取上次跟进信息（日历使用）
+ */
+export async function fetchCustomerLastFollowInfoNew(
+  id: string,
+  blueUserId: string,
+  userId: string
+) {
+  return request(
+    `/expert/follow/up/calBarInfo?eventId=${id}&blueUserId=${blueUserId}&userId=${userId}`
+  )
+}
+
+/**
  * 获取理财师个人信息
  */
 export async function fetchUserInfo(params: any) {
