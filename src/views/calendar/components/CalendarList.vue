@@ -500,7 +500,7 @@ export default {
         }&mobile=${
           event.data.mobile || event.data.eventUserPhone
         }&calendar=1&unionId=${event.data.unionId}&blueUserId=${
-          detailData.data.externalUserId
+          event.data.blueUserId
         }`
       )
     }
