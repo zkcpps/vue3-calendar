@@ -245,7 +245,7 @@ import NotWork from '@/components/NotWork'
 
 import {
   fetchCalEventsGetCalEvents,
-  fetchCustomerLastFollowInfo,
+  fetchCustomerLastFollowInfoNew,
   fetchTrainProLogin,
   fetchUserInfo
 } from '@/services/calendar'
@@ -356,12 +356,10 @@ export default {
       event.data = item
       show.value = true
       context.emit('changeShowButton', false) // 隐藏悬浮按钮
-      const res = await fetchCustomerLastFollowInfo({
+      const res = await fetchCustomerLastFollowInfoNew({
         id: item.id + '',
-        mobile: item.eventUserPhone + '',
-        unionId: item.unionId,
-        serviceProject: item.fnaType,
-        userId: item.userId
+        userId: item.userId,
+        blueUserId: item.blueUserId
       })
       if (res.code !== 200) {
         Toast('获取事件详情失败')
