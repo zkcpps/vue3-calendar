@@ -365,7 +365,7 @@ export default {
         Toast('获取事件详情失败')
       }
       detailData.data = res.data
-      console.log(detailData)
+      console.log('跟进信息', detailData)
     }
 
     //  点击复制手机号码
